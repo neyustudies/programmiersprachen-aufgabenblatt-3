@@ -210,8 +210,8 @@ class List {
       ListNode<T>* tmp = new ListNode<T>{element};
       ++size_;
       if(empty()) {
-        first_ = tmp;
-        last_ = tmp;
+        first_     = tmp;
+        last_      = tmp;
       } 
       tmp->next    = first_;
       first_->prev = tmp;
@@ -225,12 +225,14 @@ class List {
       ListNode<T>* tmp = new ListNode<T>{element};
       ++size_;
       if(empty()) {
-        first_    = tmp;
-        last_     = tmp;
+        first_     = tmp;
+        last_      = tmp;
       } 
-      tmp->prev   = last_;
-      last_->next = tmp;
-      last_       = tmp;
+      tmp->prev    = last_;
+      last_->next  = tmp;
+      last_        = tmp;
+      first_->prev = nullptr;
+      last_->next  = nullptr;
     }
 
     /* deletes first element */
