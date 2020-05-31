@@ -109,7 +109,10 @@ struct ListIterator {
 
 template <typename T>
 class List {
-  public:
+  public:                        
+    //bool empty() const;             
+    //std::size_t size() const;       // returns the number of elements
+
 
     //friend declarations for testing the members   
     template <typename TEST_TYPE>
@@ -126,21 +129,24 @@ class List {
     using const_reference = T const&;
     using iterator        = ListIterator<T>;
 
-    // not fully implemented yet
-    // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
-    /* ... */
-    List() {}
+
+    /* default constructor */
+    List() :
+      size_   {0},
+      first_  {nullptr},
+      last_   {nullptr} {}
 
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
 
 
 
-    //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
-    /* ... */
+    // (3.14 - Teil 1)
+    /* calls initializer_list constructor */
     // test and implement:
     List(std::initializer_list<T> ini_list) {
-      //not implemented yet
+      //ListNode* prev_{nullptr},
+      //ListNode* next_{nullptr}
     }
 
     // test and implement:
@@ -245,20 +251,15 @@ class List {
       // TODO: remainder of back-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* checks if container (list) is empty */
     bool empty() const {
-
-      // TODO: empty-method (Aufgabe 3.2)
-      return false;
+      return first_ == last_;
     };
 
-
-    /* ... */
-    std::size_t size() const{
-      // TODO: size-method (Aufgabe 3.2)      
-      return 27;
+    /* returns the number of elements in the list */
+    std::size_t size() const{      
+      return size_;
   };
-
 
   // list members
   private: 
