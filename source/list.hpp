@@ -271,22 +271,20 @@ class List {
       }
     }
 
-    /* ... */
+    /* returns reference to first element */
     T& front() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of front-method (Aufgabe 3.3)
+      return first_->value;
     }
 
-    /* ... */
+    /* returns reference to last element */
     T& back() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of back-method (Aufgabe 3.3)
+      return last_->value;
     }
 
     /* checks if container (list) is empty */
