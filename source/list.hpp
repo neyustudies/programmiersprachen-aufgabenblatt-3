@@ -239,12 +239,14 @@ class List {
     void pop_front() {
       if(empty()) {
         throw "List is empty";
-      } else if(size_ == 1) {
+      } 
+      else if(size_ == 1) {
         --size_;
         delete(first_);
         first_          = nullptr;
         last_           = nullptr;
-      } else {
+      } 
+      else{
         --size_;
         auto tmp        = first_;
         tmp->next->prev = nullptr;
@@ -257,12 +259,14 @@ class List {
     void pop_back() {
       if(empty()) {
         throw "List is empty";
-      } else if (size_ == 1) {
+      } 
+      else if(size_ == 1) {
         --size_;
         delete(first_);
         first_          = nullptr;
         last_           = nullptr;
-      } else {
+      } 
+      else{
         --size_;
         auto tmp        = last_;
         tmp->prev->next = nullptr;
@@ -275,16 +279,14 @@ class List {
     T& front() {
       if(empty()) {
         throw "List is empty";
-      }
-      return first_->value;
+      } return first_->value;
     }
 
     /* returns reference to last element */
     T& back() {
       if(empty()) {
         throw "List is empty";
-      }
-      return last_->value;
+      } return last_->value;
     }
 
     /* checks if container (list) is empty */
