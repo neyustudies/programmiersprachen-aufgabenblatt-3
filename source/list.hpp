@@ -239,34 +239,36 @@ class List {
     void pop_front() {
       if(empty()) {
         throw "List is empty";
-      }
-      else if(size_ == 1) {
+      } else if(size_ == 1) {
         --size_;
         delete(first_);
-        first_        = nullptr;
-        last_         = nullptr;
+        first_          = nullptr;
+        last_           = nullptr;
+      } else {
+        --size_;
+        auto tmp        = first_;
+        tmp->next->prev = nullptr;
+        first_          = tmp->next;
+        delete(tmp);
       }
-      --size_;
-      auto tmp        = first_;
-      tmp->next->prev = nullptr;
-      first_          = tmp->next;
-      delete(tmp);
     }
 
     /* deletes last element */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
+      } else if (size_ == 1) {
+        --size_;
+        delete(first_);
+        first_          = nullptr;
+        last_           = nullptr;
+      } else {
+        --size_;
+        auto tmp        = last_;
+        tmp->prev->next = nullptr;
+        last_           = tmp->prev;
+        delete(tmp);     
       }
-      else if (size_ == 1) {
-        pop_front();
-        return;
-      }
-      --size_;
-      auto tmp        = last_;
-      tmp->prev->next = nullptr;
-      last_           = tmp->prev;
-      delete(tmp);     
     }
 
     /* ... */
