@@ -205,32 +205,66 @@ class List {
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
 
 
-    /* ... */
+    /* adds element to the beginning of list */
     void push_front(T const& element) {
-      // TODO: push_front-method (Aufgabe 3.3)
+      ListNode<T>* tmp = new ListNode<T>{element};
+      ++size_;
+      if(empty()) {
+        first_ = tmp;
+        last_ = tmp;
+      } 
+      tmp->next    = first_;
+      first_->prev = tmp;
+      first_       = tmp;
+      first_->prev = nullptr;
+      last_->next  = nullptr;
     }
 
-    /* ... */
+    /* adds element to the end of the list */
     void push_back(T const& element) {
-      // TODO: push_back-method (Aufgabe 3.3)
+      ListNode<T>* tmp = new ListNode<T>{element};
+      ++size_;
+      if(empty()) {
+        first_    = tmp;
+        last_     = tmp;
+      } 
+      tmp->prev   = last_;
+      last_->next = tmp;
+      last_       = tmp;
     }
 
-    /* ... */
+    /* deletes first element */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of pop_front-method (Aufgabe 3.3)
+      else if(size_ == 1) {
+        --size_;
+        delete(first_);
+        first_        = nullptr;
+        last_         = nullptr;
+      }
+      --size_;
+      auto tmp        = first_;
+      tmp->next->prev = nullptr;
+      first_          = tmp->next;
+      delete(tmp);
     }
 
-    /* ... */
+    /* deletes last element */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of pop_back-method (Aufgabe 3.3)
+      else if (size_ == 1) {
+        pop_front();
+        return;
+      }
+      --size_;
+      auto tmp        = last_;
+      tmp->prev->next = nullptr;
+      last_           = tmp->prev;
+      delete(tmp);     
     }
 
     /* ... */
@@ -253,7 +287,7 @@ class List {
 
     /* checks if container (list) is empty */
     bool empty() const {
-      return first_ == last_;
+      return first_ == nullptr;
     };
 
     /* returns the number of elements in the list */
