@@ -207,17 +207,27 @@ class List {
       } // TODO: test method clear()
     }
 
-
     /* ... */
     //TODO: member function insert (Aufgabe 3.12)
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
 
-    /* ... */
-
+    /* reverse the list */
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
-
+    void reverse() {
+      if(empty()) {
+        throw "List is empty";
+      } auto tmp = first_;
+        for(auto i = 0; i < size_; ++i) {
+          auto old_prev  = tmp->prev;
+          tmp->prev      = tmp->next;
+          tmp->next      = old_prev;
+          tmp            = tmp->prev;
+        } auto old_first = first_;
+          first_         = last_;
+          last_          = old_first;
+    }
 
     /* adds element to the beginning of list */
     void push_front(T const& element) {
