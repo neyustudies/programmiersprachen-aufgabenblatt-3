@@ -41,6 +41,35 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 //#include "sub_tests/iterators/operator_does_not_equal.test"
 //#include "sub_tests/iterators/operator_iterate_forward.test"
 
+
+/*--------------- own tests -----------------------------------------------------------------------*/
+
+// task 3.4
+TEST_CASE("remove all elements with clear", "[list_modifier]") {
+  List<int> list{};
+
+  SECTION("4 elements to be cleared") {
+    list.push_back(5);
+    list.push_back(6);
+    list.push_back(8);
+    list.push_back(9);
+    list.clear();
+    REQUIRE(list.empty());
+  }
+
+  SECTION("1 element to be cleared") {
+    list.push_back(3);
+    list.clear();
+    REQUIRE(list.empty());
+  }
+    
+  SECTION("0 elements to be cleared") {
+    list.clear();
+    REQUIRE(list.empty());
+  }
+
+}
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
