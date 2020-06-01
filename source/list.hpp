@@ -150,8 +150,8 @@ class List {
       //ListNode* next_{nullptr}
     }
 
-    // test and implement:
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
+    // TODO: test and implement 3.5
+    /* Copy-Konstruktor using Deep-Copy semantics */
     List(List<T> const& rhs) {
       auto tmp = rhs.first_;
       for(auto i = 0; i < rhs.size_; ++i) {
@@ -160,13 +160,15 @@ class List {
       }
     }
 
-    /* ... */
-    // test and implement:
-    //TODO: (unifying) Assignment operator (Aufgabe 3.6)
+    // TODO: test and implement 3.6
+    /*(unifying) copy-and-swap assignment operator */
+    List<T>& operator=(List<T> rhs) { 
+      swap(rhs); // rhs.swap(*this)?
+      return *this;
+    }
 
     /* ... */
     // test and implement:
-
     bool operator==(List const& rhs)
     {
       //TODO: operator== (Aufgabe 3.8)
