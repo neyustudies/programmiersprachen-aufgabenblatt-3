@@ -132,10 +132,15 @@ class List {
       first_  {nullptr},
       last_   {nullptr} {}
 
-    // test and implement:
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
-
-
+    // TODO: test and implement
+    /* copy constructor using Deep-Copy semantics 
+       moves all elements from List1 to List2 */
+    List(List<T>&& rhs) :
+      first_{rhs.first_}, 
+      last_{rhs.last_} {rhs.first_ = nullptr;
+                        rhs.last_  = nullptr;
+                        size_      = rhs.size_;
+                        rhs.size_  = 0;}
 
     // (3.14 - Teil 1)
     /* calls initializer_list constructor */
@@ -147,6 +152,13 @@ class List {
 
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
+    List(List<T> const& rhs) {
+      auto tmp = rhs.first_;
+      for(auto i = 0; i < rhs.size_; ++i) {
+        push_back(tmp->value);
+        tmp = tmp->next;
+      }
+    }
 
     /* ... */
     // test and implement:
