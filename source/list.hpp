@@ -105,7 +105,7 @@ struct ListIterator {
   ListNode <T>* node = nullptr;
 };
 
-/*--------------- class List ----------------------------------------------------------*/
+/*--------------- class List ----------------------------------------------------------------*/
 
 template <typename T>
 class List {
@@ -117,6 +117,8 @@ class List {
     friend ListNode<TEST_TYPE>* get_first_pointer(List<TEST_TYPE> const& list_to_test);
     template <typename TEST_TYPE>
     friend ListNode<TEST_TYPE>* get_last_pointer(List<TEST_TYPE> const& list_to_test);
+    friend void swap(List<T>& lhs, List<T>& rhs) {lhs.swap(rhs);}
+    
 
     using value_type      = T;
     using pointer         = T*;
@@ -149,6 +151,8 @@ class List {
       //ListNode* next_{nullptr}
     }
 
+
+
     // TODO: test
     /* copy constructor using Deep-Copy semantics */
     List(List<T> const& rhs) {
@@ -161,9 +165,21 @@ class List {
 
     // TODO: test
     /* unifying copy-and-swap assignment operator */
-    List<T>& operator=(List<T> rhs) { 
+    List<T>& operator=(List<T> rhs) {
       rhs.swap(*this);
       return *this;
+    }
+
+    void swap(List<T>& rhs) {
+      auto this_first = first_;
+      auto this_last  = last_;
+      auto this_size  = size_;
+      first_          = rhs.first_;
+      last_           = rhs.last_;
+      size_           = rhs.size_;
+      rhs.first_      = this_first;
+      rhs.last_       = this_last;  
+      rhs.size_       = this_size;
     }
 
     // TODO: test
@@ -171,11 +187,11 @@ class List {
     bool operator==(List const& rhs) {
       if(size_ != rhs.size_) {
         return false;
-      } else if(first_ == nullptr ^ rhs.first_  == nullptr) {
+      } else if(first_ == nullptr xor rhs.first_ == nullptr) {
         return false;
-      } else if(first_ == nullptr && rhs.first_ == nullptr) {
+      } else if(first_ == nullptr and rhs.first_ == nullptr) {
         return true;
-      } else{
+      } else {
         auto lhs_elem = first_;
         auto rhs_elem = rhs.first_;
         for(auto i = 0; i < size_; ++i) {
@@ -188,9 +204,10 @@ class List {
     }
 
     bool operator!=(List const& rhs) {
-      //TODO: operator!= (Aufgabe 3.8)
-      // make use of operator==
-    }
+      if(List<T>::operator==(rhs) == true) {
+        return false;
+      } return true;
+    } 
 
     /* deletes all elements and the list itself */
     ~List() {
@@ -216,7 +233,7 @@ class List {
       auto tmp_size = size_;
       for(auto i = 0; i < tmp_size; ++i) {
         pop_back();
-      } // TODO: test method clear()
+      }
     }
 
     /* ... */
@@ -335,7 +352,7 @@ class List {
     ListNode<T>* last_;
 };
 
-/*--------------- free functions ----------------------------------------------------*/
+/*--------------- free functions --------------------------------------------------------------*/
 
 /* reverse the list */
 template <typename T>
