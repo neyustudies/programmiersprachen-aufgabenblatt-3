@@ -105,11 +105,10 @@ struct ListIterator {
   ListNode <T>* node = nullptr;
 };
 
-
+/*--------------- class List ----------------------------------------------------------*/
 
 template <typename T>
 class List {
-
   public:
     //friend declarations for testing the members   
     template <typename TEST_TYPE>
@@ -317,16 +316,22 @@ class List {
       return size_;
   };
 
-  // list members
+  /* list members */
   private: 
     std::size_t  size_;
     ListNode<T>* first_;
     ListNode<T>* last_;
 };
 
-/* ... */
-//TODO: Freie Funktion reverse 
-//(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
+/*--------------- free functions ----------------------------------------------------*/
+
+/* reverse the list */
+template <typename T>
+List<T> reverse(List<T> const& x) {
+  List<T> list{x};
+  list.reverse();
+  return list;
+}
 
 /* ... */
 //TODO: Freie Funktion operator+ (3.14 - Teil 2)
