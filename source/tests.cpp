@@ -70,8 +70,9 @@ TEST_CASE("remove all elements with clear", "[list_modifier]") {
 
 }
 
-/*
+
 // task 3.5
+/*
 TEST_CASE("copying all elements into another list", "[copy_constructor]") {
   List<int> list{};
   list.push_back(5);
@@ -82,6 +83,45 @@ TEST_CASE("copying all elements into another list", "[copy_constructor]") {
   REQUIRE(list == list2); 
 
 } */
+
+/*
+// task 3.6
+TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
+  List<int> list{};
+  list.push_back(5);
+  list.push_back(6);
+  list.push_back(8);
+  list.push_back(9);
+  List<int> list2{};
+  list = list2;
+  REQUIRE(list == list2);
+}*/
+
+
+// task 3.8
+TEST_CASE("Check lists for equality and inequality", "[compare]") {
+  List<int> list1{};
+  list1.push_front(1);
+  list1.push_front(2);
+  list1.push_front(3);
+  list1.push_front(4);
+  List<int> list2{};
+  list2.push_front(1);
+  list2.push_front(2);
+  list2.push_front(3);
+  list2.push_front(4);
+  List<int> list3{};
+  list3.push_front(1);
+  list3.push_front(2);
+
+  SECTION("Check lists for equality") {
+    REQUIRE(  list1 == list2);
+    REQUIRE(  list2 == list1);
+    REQUIRE(!(list1 == list3));
+    REQUIRE(!(list2 == list3));
+  }
+}
+
 
 
 
