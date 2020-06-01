@@ -70,8 +70,22 @@ TEST_CASE("remove all elements with clear", "[list_modifier]") {
 
 }
 
-int main(int argc, char *argv[])
-{
+/*
+// task 3.5
+TEST_CASE("copying all elements into another list", "[copy_constructor]") {
+  List<int> list{};
+  list.push_back(5);
+  list.push_back(6);
+  list.push_back(8);
+  list.push_back(9);
+  List<int> list2{list};
+  REQUIRE(list == list2); 
+
+} */
+
+
+
+int main(int argc, char *argv[]) {
   return Catch::Session().run(argc, argv);
 }
 
