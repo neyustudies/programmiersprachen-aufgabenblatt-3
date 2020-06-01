@@ -70,18 +70,16 @@ TEST_CASE("remove all elements with clear", "[list_modifier]") {
 
 }
 
-
 // task 3.5
 /*
 TEST_CASE("copying all elements into another list", "[copy_constructor]") {
-  List<int> list{};
-  list.push_back(5);
-  list.push_back(6);
-  list.push_back(8);
-  list.push_back(9);
-  List<int> list2{list};
-  REQUIRE(list == list2); 
-
+      List<int> list;
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    list.push_front(4);
+    List<int> list2{list};
+    REQUIRE(!(list2.empty()));
 } */
 
 /*
@@ -115,14 +113,20 @@ TEST_CASE("Check lists for equality and inequality", "[compare]") {
   list3.push_front(2);
 
   SECTION("Check lists for equality") {
-    REQUIRE(  list1 == list2);
-    REQUIRE(  list2 == list1);
-    REQUIRE(!(list1 == list3));
-    REQUIRE(!(list2 == list3));
+    REQUIRE((list1 == list2) == true);
+    REQUIRE((list2 == list1) == true);
+    REQUIRE((list1 == list3) == false);
+    REQUIRE((list2 == list3) == false);
   }
+
+  SECTION("Check lists for inequality") {
+    REQUIRE((list1 != list3) == true);
+    REQUIRE((list2 != list3) == true);
+    REQUIRE((list1 != list2) == false);
+    REQUIRE((list2 != list1) == false);
+  }
+
 }
-
-
 
 
 int main(int argc, char *argv[]) {
