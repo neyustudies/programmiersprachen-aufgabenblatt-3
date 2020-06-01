@@ -13,8 +13,8 @@ class List;
 template <typename T>
 struct ListNode {
   T         value = T{};
-  ListNode* prev = nullptr;
-  ListNode* next = nullptr;
+  ListNode* prev  = nullptr;
+  ListNode* next  = nullptr;
 };
 
 
@@ -31,7 +31,7 @@ struct ListIterator {
 
 
   /* DESCRIPTION  operator*() */
-  T&  operator*()  const {
+  T& operator*()  const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
@@ -109,11 +109,8 @@ struct ListIterator {
 
 template <typename T>
 class List {
-  public:                        
-    //bool empty() const;             
-    //std::size_t size() const;       // returns the number of elements
 
-
+  public:
     //friend declarations for testing the members   
     template <typename TEST_TYPE>
     friend size_t get_size(List<TEST_TYPE> const& list_to_test);
@@ -128,7 +125,6 @@ class List {
     using reference       = T&;
     using const_reference = T const&;
     using iterator        = ListIterator<T>;
-
 
     /* default constructor */
     List() :
@@ -170,10 +166,10 @@ class List {
       // make use of operator==
     }
 
-    /* ... */
+    /* deletes all elements and the list itself */
     ~List() {
-      //TODO: Implement via clear-Method (Aufgabe 3.4)
-    } //can not really be tested
+      clear();
+    }
 
     /* ... */
     ListIterator<T> begin() {
@@ -189,9 +185,13 @@ class List {
       return {};
     }
 
-    /* ... */ 
-    // test and implement:
-    //TODO: clear()-Method (Aufgabe 3.4)
+    /* deletes all elements of the list */ 
+    void clear() {
+      auto tmp_size = size_;
+      for(auto i = 0; i < tmp_size; ++i) {
+        pop_back();
+      } // TODO: test method clear()
+    }
 
 
     /* ... */
@@ -210,14 +210,13 @@ class List {
       ListNode<T>* tmp = new ListNode<T>{element};
       ++size_;
       if(empty()) {
-        first_ = tmp;
-        last_  = tmp;
-      } 
-      tmp->next    = first_;
-      first_->prev = tmp;
-      first_       = tmp;
-      first_->prev = nullptr;
-      last_->next  = nullptr;
+        first_       = tmp;
+        last_        = tmp;
+      } tmp->next    = first_;
+        first_->prev = tmp;
+        first_       = tmp;
+        first_->prev = nullptr;
+        last_->next  = nullptr;
     }
 
     /* adds element to the end of the list */
@@ -225,28 +224,25 @@ class List {
       ListNode<T>* tmp = new ListNode<T>{element};
       ++size_;
       if(empty()) {
-        first_ = tmp;
-        last_  = tmp;
-      } 
-      tmp->prev    = last_;
-      last_->next  = tmp;
-      last_        = tmp;
-      first_->prev = nullptr;
-      last_->next  = nullptr;
+        first_       = tmp;
+        last_        = tmp;
+      } tmp->prev    = last_;
+        last_->next  = tmp;
+        last_        = tmp;
+        first_->prev = nullptr;
+        last_->next  = nullptr;
     }
 
     /* deletes first element */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
-      } 
-      else if(size_ == 1) {
+      } else if(size_ == 1) {
         --size_;
         delete(first_);
-        first_ = nullptr;
-        last_  = nullptr;
-      } 
-      else {
+        first_          = nullptr;
+        last_           = nullptr;
+      } else {
         --size_;
         auto tmp        = first_;
         tmp->next->prev = nullptr;
@@ -259,14 +255,12 @@ class List {
     void pop_back() {
       if(empty()) {
         throw "List is empty";
-      } 
-      else if(size_ == 1) {
+      } else if(size_ == 1) {
         --size_;
         delete(first_);
-        first_ = nullptr;
-        last_  = nullptr;
-      } 
-      else {
+        first_          = nullptr;
+        last_           = nullptr;
+      } else {
         --size_;
         auto tmp        = last_;
         tmp->prev->next = nullptr;
@@ -289,19 +283,19 @@ class List {
       } return last_->value;
     }
 
-    /* checks if container (list) is empty */
+    /* checks if list is empty */
     bool empty() const {
       return first_ == nullptr;
     };
 
     /* returns the number of elements in the list */
-    std::size_t size() const{      
+    std::size_t size() const {      
       return size_;
   };
 
   // list members
   private: 
-    std::size_t size_;
+    std::size_t  size_;
     ListNode<T>* first_;
     ListNode<T>* last_;
 };
@@ -313,4 +307,4 @@ class List {
 /* ... */
 //TODO: Freie Funktion operator+ (3.14 - Teil 2)
 
-#endif // # define BUW_LIST_HPP
+#endif // #define BUW_LIST_HPP
