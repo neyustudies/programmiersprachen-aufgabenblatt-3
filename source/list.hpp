@@ -131,15 +131,15 @@ class List {
       first_  {nullptr},
       last_   {nullptr} {}
 
-    // TODO: test and implement
-    /* copy constructor using Deep-Copy semantics 
-       moves all elements from List1 to List2 */
+    // TODO: test
+    /* move constructor moves all elements from rhs to List2 */
     List(List<T>&& rhs) :
-      first_{rhs.first_}, 
-      last_{rhs.last_} {rhs.first_ = nullptr;
-                        rhs.last_  = nullptr;
-                        size_      = rhs.size_;
-                        rhs.size_  = 0;}
+      first_(rhs.first_), 
+      last_(rhs.last_) {
+        rhs.first_ = nullptr;
+        rhs.last_  = nullptr;
+        size_      = rhs.size_;
+        rhs.size_  = 0;}
 
     // (3.14 - Teil 1)
     /* calls initializer_list constructor */
@@ -149,8 +149,8 @@ class List {
       //ListNode* next_{nullptr}
     }
 
-    // TODO: test and implement 3.5
-    /* Copy-Konstruktor using Deep-Copy semantics */
+    // TODO: test
+    /* copy constructor using Deep-Copy semantics */
     List(List<T> const& rhs) {
       auto tmp = rhs.first_;
       for(auto i = 0; i < rhs.size_; ++i) {
@@ -159,22 +159,35 @@ class List {
       }
     }
 
-    // TODO: test and implement 3.6
-    /*(unifying) copy-and-swap assignment operator */
+    // TODO: test
+    /* unifying copy-and-swap assignment operator */
     List<T>& operator=(List<T> rhs) { 
-      swap(rhs); // rhs.swap(*this)?
+      rhs.swap(*this);
       return *this;
     }
 
-    /* ... */
-    // test and implement:
-    bool operator==(List const& rhs)
-    {
-      //TODO: operator== (Aufgabe 3.8)
+    // TODO: test
+    /* checks if two lists are identical */
+    bool operator==(List const& rhs) {
+      if(size_ != rhs.size_) {
+        return false;
+      } else if(first_ == nullptr ^ rhs.first_  == nullptr) {
+        return false;
+      } else if(first_ == nullptr && rhs.first_ == nullptr) {
+        return true;
+      } else{
+        auto lhs_elem = first_;
+        auto rhs_elem = rhs.first_;
+        for(auto i = 0; i < size_; ++i) {
+          if(lhs_elem->value != rhs_elem->value) {
+            return false;
+          } rhs_elem = rhs_elem->next;
+            lhs_elem = lhs_elem->next;
+        } return true;
+      }
     }
 
-    bool operator!=(List const& rhs)
-    {
+    bool operator!=(List const& rhs) {
       //TODO: operator!= (Aufgabe 3.8)
       // make use of operator==
     }
@@ -212,8 +225,7 @@ class List {
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
 
-    /* reverse the list */
-    //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
+    /* reverses the list */
     void reverse() {
       if(empty()) {
         throw "List is empty";
@@ -327,8 +339,8 @@ class List {
 
 /* reverse the list */
 template <typename T>
-List<T> reverse(List<T> const& x) {
-  List<T> list{x};
+List<T> reverse(List<T> const& to_be_reversed) {
+  List<T> list{to_be_reversed};
   list.reverse();
   return list;
 }
