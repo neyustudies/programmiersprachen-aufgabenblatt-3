@@ -45,7 +45,7 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 /*--------------- own tests -----------------------------------------------------------------------*/
 
 // task 3.4
-TEST_CASE("remove all elements with clear", "[list_modifier]") {
+TEST_CASE("remove all elements with clear", "[clear]") {
   List<int> list{};
 
   SECTION("4 elements to be cleared") {
@@ -80,8 +80,8 @@ TEST_CASE("copying all elements into another list", "[copy_constructor]") {
     list.push_front(4);
     List<int> list2{list};
     REQUIRE(!(list2.empty()));
-} */
-
+} 
+*/
 /*
 // task 3.6
 TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
@@ -93,6 +93,89 @@ TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   List<int> list2{};
   list = list2;
   REQUIRE(list == list2);
+}
+*/
+// task 3.7
+TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
+  List<int> list1{};
+  List<int> list2{};
+
+  SECTION("reverse a list of 1 element") {
+    list1.push_back(1);
+    list2.push_back(1);
+    list1.reverse();
+    list2.reverse();
+    REQUIRE(list1 == list2);
+  }
+
+  SECTION("reverse a list of 2 elements") {
+    list1.push_back(1);
+    list1.push_back(3);
+    list2.push_back(3);
+    list2.push_back(1);
+    list2.reverse();
+    REQUIRE(list1 == list2);
+  }
+
+  SECTION("reverse a list of more than 2 elements") {
+    list1.push_back(3);
+    list1.push_back(4);
+    list1.push_back(5);
+    list1.push_back(6);
+    list1.push_back(7);
+    list1.push_back(8);
+    list2.push_back(8);
+    list2.push_back(7);
+    list2.push_back(6);
+    list2.push_back(5);
+    list2.push_back(4);
+    list2.push_back(3);
+    list2.reverse();
+    REQUIRE(list1 == list2);
+    list2.reverse();
+    list1.reverse();
+    REQUIRE(list1 == list2);
+    list2.reverse();
+    list1.reverse();
+    REQUIRE(list1 == list2);
+  }
+
+}
+
+/*
+// task 3.7
+TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
+  List<int> list{};
+  List<int> list2{};
+
+
+  SECTION("revere a list of 2 elements") {
+     list.push_back(1);
+     list.push_back(3);
+    list2.push_back(3);
+    list2.push_back(1);
+    REQUIRE((list == reverse(list2))==true);
+  }
+
+  SECTION("revrse a list of more than 2 elements") {
+     list.push_back(3);
+     list.push_back(4);
+     list.push_back(5);
+     list.push_back(6);
+     list.push_back(7);
+     list.push_back(8);
+    list2.push_back(8);
+    list2.push_back(7);
+    list2.push_back(6);
+    list2.push_back(5);
+    list2.push_back(4);
+    list2.push_back(3);
+    REQUIRE((list == reverse(list2))==true);
+    REQUIRE((reverse(list) == reverse(list2)==true));
+    REQUIRE((reverse(list) == reverse(list2))==true);
+  }
+
+
 }*/
 
 
