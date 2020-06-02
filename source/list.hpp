@@ -117,7 +117,7 @@ class List {
     friend ListNode<TEST_TYPE>* get_first_pointer(List<TEST_TYPE> const& list_to_test);
     template <typename TEST_TYPE>
     friend ListNode<TEST_TYPE>* get_last_pointer(List<TEST_TYPE> const& list_to_test);
-    friend void swap(List<T>& lhs, List<T>& rhs) {lhs.swap(rhs);}
+    //friend void swap(List<T>& lhs, List<T>& rhs) {lhs.swap(rhs);}
     
 
     using value_type      = T;
@@ -134,24 +134,23 @@ class List {
       last_   {nullptr} {}
 
     // TODO: test
-    /* move constructor moves all elements from rhs to List2 */
+    /* move constructor moves all elements from rhs to a new list */
     List(List<T>&& rhs) :
       first_(rhs.first_), 
       last_(rhs.last_) {
         rhs.first_ = nullptr;
         rhs.last_  = nullptr;
-        size_      = rhs.size_;
-        rhs.size_  = 0;}
+      //size_      = rhs.size_;
+      //rhs.size_  = 0;
+      }
 
-    // (3.14 - Teil 1)
+
     /* calls initializer_list constructor */
-    // test and implement:
     List(std::initializer_list<T> ini_list) {
-      //ListNode* prev_{nullptr},
-      //ListNode* next_{nullptr}
+      for (auto i = 0; i < ini_list.size(); ++i) {
+        push_back(*(ini_list.begin() + i));
+      }
     }
-
-
 
     // TODO: test
     /* copy constructor using Deep-Copy semantics */
@@ -166,10 +165,11 @@ class List {
     // TODO: test
     /* unifying copy-and-swap assignment operator */
     List<T>& operator=(List<T> rhs) {
-      rhs.swap(*this);
+      rhs.std::swap(*this);
       return *this;
     }
 
+/* // or use std::swap?
     void swap(List<T>& rhs) {
       auto this_first = first_;
       auto this_last  = last_;
@@ -180,16 +180,15 @@ class List {
       rhs.first_      = this_first;
       rhs.last_       = this_last;  
       rhs.size_       = this_size;
-    }
+    }*/
 
-    // TODO: test
-    /* checks if two lists are identical */
+    /* checks if two lists are equal */
     bool operator==(List const& rhs) {
       if(size_ != rhs.size_) {
         return false;
-      } else if(first_ == nullptr xor rhs.first_ == nullptr) {
+      } else if(first_ == nullptr ^ rhs.first_ == nullptr) {
         return false;
-      } else if(first_ == nullptr and rhs.first_ == nullptr) {
+      } else if(first_ == nullptr && rhs.first_ == nullptr) {
         return true;
       } else {
         auto lhs_elem = first_;
@@ -203,6 +202,7 @@ class List {
       }
     }
 
+    /* checks if two lists are inequal */
     bool operator!=(List const& rhs) {
       if(List<T>::operator==(rhs) == true) {
         return false;
@@ -214,18 +214,16 @@ class List {
       clear();
     }
 
-    /* ... */
+    /* returns iterator to the first element */
     ListIterator<T> begin() {
-      //TODO: begin-Method returning an Iterator to the 
-      //      first element in the List (Aufgabe 3.10)
-      return {};
+      //return ListIterator<T>{first_}; // not certain, not tested
+      return{};
     }
 
-    /* ... */
+    /* returns iterator to the element after the last element */
     ListIterator<T> end() {
-      //TODO: end-Method returning an Iterator to element after (!) 
-      //      the last element in the List (Aufgabe 3.10)
-      return {};
+      //return ListIterator<T>{nullptr}; // not certain, not tested
+      return{};
     }
 
     /* deletes all elements of the list */ 
@@ -354,15 +352,20 @@ class List {
 
 /*--------------- free functions --------------------------------------------------------------*/
 
-/* reverse the list */
+/* (free) reverse the list */  // Bus error: 10
 template <typename T>
-List<T> reverse(List<T> const& to_be_reversed) {
-  List<T> list{to_be_reversed};
-  list.reverse();
-  return list;
+List<T> reverse(List<T> const& lhs) {
+  List<T> r{lhs};
+  r.reverse();
+  return r;
 }
 
-/* ... */
-//TODO: Freie Funktion operator+ (3.14 - Teil 2)
+/* (free) adds elements of a list in another list */
+template <typename T>
+List<T> operator+(List<T> const& lhs, List<T> const& rhs) { //move constr. useful
+  List<T> r{lhs}; 
+  for(auto const& c : rhs) r.push_back(c);
+  return r;
+}
 
 #endif // #define BUW_LIST_HPP
