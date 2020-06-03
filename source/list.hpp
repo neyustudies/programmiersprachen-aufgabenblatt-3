@@ -117,7 +117,7 @@ class List {
     friend ListNode<TEST_TYPE>* get_first_pointer(List<TEST_TYPE> const& list_to_test);
     template <typename TEST_TYPE>
     friend ListNode<TEST_TYPE>* get_last_pointer(List<TEST_TYPE> const& list_to_test);
-    //friend void swap(List<T>& lhs, List<T>& rhs) {lhs.swap(rhs);}
+    friend void swap(List<T>& lhs, List<T>& rhs) {lhs.swap(rhs);}
     
 
     using value_type      = T;
@@ -127,23 +127,36 @@ class List {
     using const_reference = T const&;
     using iterator        = ListIterator<T>;
 
+
     /* default constructor */
     List() :
       size_   {0},
       first_  {nullptr},
       last_   {nullptr} {}
 
-    // TODO: test
+
+    /* copy constructor using Deep-Copy semantics */
+    List(List<T> const& rhs) :
+      size_ {rhs.size_},
+      first_ {rhs.first_},
+      last_ {rhs.last_} {
+        rhs.size_  = 0;
+        for(auto i = 0; i < rhs.size_; ++i) {
+          push_back(first_->value);
+          first_ = first_->next;
+        }
+      }
+    
+
     /* move constructor moves all elements from rhs to a new list */
     List(List<T>&& rhs) :
-      first_(rhs.first_), 
-      last_(rhs.last_) {
+      size_   {rhs.size_},
+      first_  {rhs.first_}, 
+      last_   {rhs.last_} {
+        rhs.size_  = 0;
         rhs.first_ = nullptr;
         rhs.last_  = nullptr;
-      //size_      = rhs.size_;
-      //rhs.size_  = 0;
       }
-
 
     /* calls initializer_list constructor */
     List(std::initializer_list<T> ini_list) {
@@ -152,35 +165,12 @@ class List {
       }
     }
 
-    // TODO: test
-    /* copy constructor using Deep-Copy semantics */
-    List(List<T> const& rhs) {
-      auto tmp = rhs.first_;
-      for(auto i = 0; i < rhs.size_; ++i) {
-        push_back(tmp->value);
-        tmp = tmp->next;
-      }
-    }
-
-    // TODO: test
+    
     /* unifying copy-and-swap assignment operator */
     List<T>& operator=(List<T> rhs) {
-      rhs.std::swap(*this);
+      rhs.swap(*this);
       return *this;
     }
-
-/* // or use std::swap?
-    void swap(List<T>& rhs) {
-      auto this_first = first_;
-      auto this_last  = last_;
-      auto this_size  = size_;
-      first_          = rhs.first_;
-      last_           = rhs.last_;
-      size_           = rhs.size_;
-      rhs.first_      = this_first;
-      rhs.last_       = this_last;  
-      rhs.size_       = this_size;
-    }*/
 
     /* checks if two lists are equal */
     bool operator==(List const& rhs) {
@@ -333,12 +323,14 @@ class List {
       } return last_->value;
     }
 
-    /* checks if list is empty */
+    /* task 3.2
+     * checks if list is empty */
     bool empty() const {
       return first_ == nullptr;
     };
 
-    /* returns the number of elements in the list */
+    /* task 3.2
+     * returns the number of elements in the list */
     std::size_t size() const {      
       return size_;
   };
