@@ -71,18 +71,41 @@ TEST_CASE("remove all elements with clear", "[clear]") {
 }
 
 // task 3.5
-/*
 TEST_CASE("copying all elements into another list", "[copy_constructor]") {
-      List<int> list;
-    list.push_front(1);
-    list.push_front(2);
-    list.push_front(3);
-    list.push_front(4);
+
+  SECTION("copy-construct an empty list and compare both lists") {
+    List<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
     List<int> list2{list};
     REQUIRE(!(list2.empty()));
+    REQUIRE(list2 == list);
+    list2.clear();
+    REQUIRE((list2.empty()));
+  }
+
+  SECTION("copy-construct a non empty list and compare both lists") {
+    List<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    List<int> list2;
+    list.push_front(8);
+    list.push_front(7);
+    list.push_front(6);
+    list.push_front(5);
+    List<int> list2{list};
+    REQUIRE(!(list2.empty()));
+    REQUIRE(list2 == list);
+    list2.clear();
+    REQUIRE((list2.empty()));
+  }
+
 } 
-*/
-/*
+
 // task 3.6
 TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   List<int> list{};
@@ -94,7 +117,7 @@ TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   list = list2;
   REQUIRE(list == list2);
 }
-*/
+
 // task 3.7
 TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
   List<int> list1{};
@@ -154,7 +177,7 @@ TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
      list.push_back(3);
     list2.push_back(3);
     list2.push_back(1);
-    REQUIRE((list == reverse(list2))==true);
+    REQUIRE((list == reverse(list2)));
   }
 
   SECTION("revrse a list of more than 2 elements") {
@@ -170,9 +193,9 @@ TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
     list2.push_back(5);
     list2.push_back(4);
     list2.push_back(3);
-    REQUIRE((list == reverse(list2))==true);
-    REQUIRE((reverse(list) == reverse(list2)==true));
-    REQUIRE((reverse(list) == reverse(list2))==true);
+    REQUIRE((list == reverse(list2)));
+    REQUIRE((reverse(list) == reverse(list2)));
+    REQUIRE((reverse(list) == reverse(list2)));
   }
 
 
