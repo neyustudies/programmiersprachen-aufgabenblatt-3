@@ -31,8 +31,8 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/back.test"
 
 //test cases for retrieving iterators
-//#include "sub_tests/begin.test"
-//#include "sub_tests/end.test"
+#include "sub_tests/begin.test"
+#include "sub_tests/end.test"
 
 //iterator tests
 //#include "sub_tests/iterators/operator_star.test"
@@ -68,11 +68,10 @@ TEST_CASE("remove all elements with clear", "[clear]") {
     list.clear();
     REQUIRE(list.empty());
   }
-
 }
 
 
-// task 3.5
+// task 3.5 
 TEST_CASE("copying all elements into another list", "[copy_constructor]") {
 
   SECTION("copy-construct an empty list and compare both lists") {
@@ -99,13 +98,12 @@ TEST_CASE("copying all elements into another list", "[copy_constructor]") {
     list.push_front(7);
     list.push_front(6);
     list.push_front(5);
-    List<int> list2{list};
-    REQUIRE(!(list2.empty()));
-    REQUIRE(list2 == list);
-    list2.clear();
-    REQUIRE((list2.empty()));
+    List<int> list3{list};
+    REQUIRE(!(list3.empty()));
+    REQUIRE(list3 == list);
+    list3.clear();
+    REQUIRE((list3.empty()));
   }
-
 } 
 
 
@@ -166,18 +164,16 @@ TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
     list1.reverse();
     REQUIRE(list1 == list2);
   }
-
 }
 
 
-/*
 // task 3.7
 TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
   List<int> list{};
   List<int> list2{};
 
 
-  SECTION("revere a list of 2 elements") {
+  SECTION("free-reverse a list of 2 elements") {
      list.push_back(1);
      list.push_back(3);
     list2.push_back(3);
@@ -185,7 +181,7 @@ TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
     REQUIRE((list == reverse(list2)));
   }
 
-  SECTION("revrse a list of more than 2 elements") {
+  SECTION("free-reverse a list of more than 2 elements") {
      list.push_back(3);
      list.push_back(4);
      list.push_back(5);
@@ -199,11 +195,10 @@ TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
     list2.push_back(4);
     list2.push_back(3);
     REQUIRE((list == reverse(list2)));
-    REQUIRE((reverse(list) == reverse(list2)));
-    REQUIRE((reverse(list) == reverse(list2)));
+    REQUIRE((reverse(list) == (list2)));
+    REQUIRE(((list) == reverse(list2)));
   }
-
-}*/
+}
 
 
 // task 3.8
@@ -235,12 +230,11 @@ TEST_CASE("Check lists for equality and inequality", "[compare]") {
     REQUIRE((list1 != list2) == false);
     REQUIRE((list2 != list1) == false);
   }
-
 }
 
 
 // task 3.9
-TEST_CASE("move constructor", "[constructor]") {
+TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   List<int> list; 
   list.push_front(1); 
   list.push_front(2); 
@@ -249,7 +243,14 @@ TEST_CASE("move constructor", "[constructor]") {
   List<int> list2 = std::move(list); 
   REQUIRE(0 == list.size()); 
   REQUIRE(list.empty());
-  REQUIRE(4 == list2.size()); }
+  REQUIRE(4 == list2.size()); 
+}
+
+/*
+// task 3.10
+TEST_CASE("initializer list constructor", "[init-constructor]") {
+  List<int> int_list{9, 5, 38, 100};
+}*/
 
 
 int main(int argc, char *argv[]) {
