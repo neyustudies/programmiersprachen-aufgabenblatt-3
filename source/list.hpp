@@ -119,7 +119,7 @@ class List {
     friend ListNode<TEST_TYPE>* get_first_pointer(List<TEST_TYPE> const& list_to_test);
     template <typename TEST_TYPE>
     friend ListNode<TEST_TYPE>* get_last_pointer(List<TEST_TYPE> const& list_to_test);
-    friend void swap(List<T>& lhs, List<T>& rhs) {lhs.swap(rhs);}
+    
     
 
     using value_type      = T;
@@ -139,13 +139,13 @@ class List {
 
     /* copy constructor using Deep-Copy semantics */
     List(List<T> const& rhs) :
-      size_   {rhs.size_},
-      first_  {rhs.first_},
-      last_   {rhs.last_} {
-        rhs.size_  = 0;
+      size_   {0},
+      first_  {nullptr},
+      last_   {nullptr} {
+        auto tmp = rhs.first_; 
         for(auto i = 0; i < rhs.size_; ++i) {
-          push_back(first_->value);
-          first_ = first_->next;
+          push_back(tmp->value);
+          tmp = tmp->next;
         }
       }
     
@@ -168,11 +168,19 @@ class List {
       }
     }
 
-    
+
     /* unifying copy-and-swap assignment operator */
     List<T>& operator=(List<T> rhs) {
       rhs.swap(*this);
       return *this;
+    }
+
+
+    /* swap function for assignment operator */
+    void swap(List<T>& list) {
+      std::swap(first_,list.first_);
+      std::swap(last_, list.last_);
+      std::swap(size_, list.size_);
     }
 
 
@@ -199,7 +207,7 @@ class List {
 
     /* checks if two lists are inequal */
     bool operator!=(List const& rhs) const {
-      if(List<T>::operator==(rhs) == true) {
+      if(operator==(rhs) == true) {
         return false;
       } return true;
     } 
@@ -378,9 +386,9 @@ List<T> reverse(List<T> const& lhs) {
 /* (free) adds elements of a list in another list */
 template <typename T>
 List<T> operator+(List<T> const& lhs, List<T> const& rhs) { //move constr. useful
-  List<T> r{lhs}; 
-  for(auto const& c : rhs) r.push_back(c);
-  return r;
+  //List<T> r{lhs}; 
+  //for(auto const& c : rhs) r.push_back(c);
+  return;
 }
 
 
