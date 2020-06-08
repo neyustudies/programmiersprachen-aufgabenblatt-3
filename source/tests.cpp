@@ -246,11 +246,23 @@ TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   REQUIRE(4 == list2.size()); 
 }
 
-/*
+
 // task 3.10
 TEST_CASE("initializer list constructor", "[init-constructor]") {
-  List<int> int_list{9, 5, 38, 100};
-}*/
+  List<int> int_list1{9, 5, 38, 100};
+  List<int> int_list2{9, 5, 38, 100};
+  List<int> int_list3{9, 5, 38, 200};
+  List<int> int_list4{9, 5, 38, 200};
+  REQUIRE(int_list1.size() == 4);
+  REQUIRE(int_list1 == int_list2);
+  REQUIRE(int_list3 == int_list4);
+  REQUIRE(int_list1.front() == int_list3.front());
+  REQUIRE(!(int_list1.end() == int_list3.end()));
+  REQUIRE(!(int_list2.end() == int_list4.end()));
+
+
+   
+}
 
 
 int main(int argc, char *argv[]) {
