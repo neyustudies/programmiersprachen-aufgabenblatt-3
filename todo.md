@@ -21,14 +21,14 @@
   - [x] tests for copy-constructor
 
 3.6
-  - [x] unifying assignment operator
-  - [ ] tests for unifying assignment operator  
+  - [x] unifying assignment operator=
+  - [x] tests for unifying assignment operator=  
 
 3.7
   - [x] reverse()
-  - [ ] reverse free function (not working yet)
+  - [x] reverse free function
   - [x] tests for reverse()
-  - [ ] tests for free function
+  - [x] tests for free function
 
 3.8
   - [x] operator==
@@ -42,13 +42,11 @@
 
 3.10
   - [x] initializer_list constructor
-  - [ ] tests for initializer_list constructor
+  - [ ] tests for initializer_list constructor // not working yet
 
 3.11
-  - [ ] begin()
-  - [ ] end()
-  - [ ] tests for begin()
-  - [ ] tests for end()
+  - [x] begin()
+  - [x] end()
 
 3.12
   - [ ] operator*()
