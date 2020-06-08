@@ -42,7 +42,7 @@
 
 3.10
   - [x] initializer_list constructor
-  - [ ] tests for initializer_list constructor // not working yet
+  - [x] tests for initializer_list constructor
 
 3.11
   - [x] begin()
