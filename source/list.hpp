@@ -137,7 +137,8 @@ class List {
       last_   {nullptr} {}
 
 
-    /* copy constructor using Deep-Copy semantics */
+    /* copy constructor 
+    using Deep-Copy semantics */
     List(List<T> const& rhs) :
       size_   {0},
       first_  {nullptr},
@@ -150,7 +151,8 @@ class List {
       }
     
 
-    /* move constructor moves all elements from rhs to a new list */
+    /* move constructor moves all 
+    elements from rhs to a new list */
     List(List<T>&& rhs) :
       size_   {rhs.size_},
       first_  {rhs.first_}, 
@@ -162,11 +164,14 @@ class List {
 
 
     /* calls initializer_list constructor */
-    List(std::initializer_list<T> ini_list) {
-      for (auto i = 0; i < ini_list.size(); ++i) {
-        push_back(*(ini_list.begin() + i));
+    List(std::initializer_list<T> const& ini_list) :
+      size_   {0},
+      first_  {nullptr},
+      last_   {nullptr} {
+        for(auto i = 0; i < ini_list.size(); ++i) {
+        push_back(*(ini_list.begin())+i);
+        }
       }
-    }
 
 
     /* unifying copy-and-swap assignment operator */
@@ -221,16 +226,14 @@ class List {
 
     /* returns iterator to the first element */
     ListIterator<T> begin() {
-      //return ListIterator<T>{first_}; // not certain, not tested
-      return {};
+      return ListIterator<T>{first_};
     }
 
 
     /* returns iterator to the 
     element after the last element */
     ListIterator<T> end() {
-      //return ListIterator<T>{nullptr}; // not certain, not tested
-      return{};
+      return ListIterator<T>{nullptr};
     }
 
 
@@ -374,7 +377,7 @@ class List {
 /*--------------- free functions --------------------------------------------------------------*/
 
 
-/* (free) reverse the list */  // Bus error: 10
+/* (free) reverse the list */
 template <typename T>
 List<T> reverse(List<T> const& lhs) {
   List<T> r{lhs};
@@ -383,12 +386,12 @@ List<T> reverse(List<T> const& lhs) {
 }
 
 
-/* (free) adds elements of a list in another list */
+/* (free) adds elements of a list to another list */
 template <typename T>
 List<T> operator+(List<T> const& lhs, List<T> const& rhs) { //move constr. useful
   //List<T> r{lhs}; 
   //for(auto const& c : rhs) r.push_back(c);
-  return;
+  //return;
 }
 
 
