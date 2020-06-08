@@ -19,7 +19,7 @@ struct ListNode {
 
 
 //TODO: Implementierung der Methoden des Iterators 
-//      (nach Vorlesung STL-1 am 09. Juni) (Aufgabe 3.11)
+//      (nach Vorlesung STL-1 am 09. Juni) (Aufgabe 3.12)
 template <typename T>
 struct ListIterator {
   using Self              = ListIterator<T>;
@@ -37,7 +37,7 @@ struct ListIterator {
     }
 
     //TODO: remaining implementation of derefenciation of 
-    //      iterator using operator* (Aufgabe 3.11 - Teil 1)
+    //      iterator using operator* (Aufgabe 3.12 - Teil 1)
 
   } //call *it
 
@@ -48,7 +48,7 @@ struct ListIterator {
     }
 
     //TODO: remaining implementation of derefenciation of 
-    //      iterator using operator-> (Aufgabe 3.11 - Teil 2)
+    //      iterator using operator-> (Aufgabe 3.12 - Teil 2)
   }  //call it->method() or it->member
 
 
@@ -59,7 +59,7 @@ struct ListIterator {
     }
 
     //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 3)
+    //      (Aufgabe 3.12 - Teil 3)
     
   }
 
@@ -71,7 +71,7 @@ struct ListIterator {
     }
 
     //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 4)
+    //      (Aufgabe 3.12 - Teil 4)
 
   }
 
@@ -79,7 +79,7 @@ struct ListIterator {
   /* ... */
   bool operator==(ListIterator<T> const& x) const {
     //TODO: Implement Equality-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 5)
+    //      (Aufgabe 3.12 - Teil 5)
     // Iterators should be the same if they refer to the same node
     return false;
   } // call it: == it
@@ -87,7 +87,7 @@ struct ListIterator {
   /* ... */
   bool operator!=(ListIterator<T> const& x) const {
     //TODO: Implement Inequality-Operation for Iterator  
-    //      (Aufgabe 3.11 - Teil 6)
+    //      (Aufgabe 3.12 - Teil 6)
     // Reuse operator==
     return false;
   } // call it: != it
@@ -177,7 +177,7 @@ class List {
 
 
     /* checks if two lists are equal */
-    bool operator==(List const& rhs) {
+    bool operator==(List const& rhs) const {
       if(size_ != rhs.size_) {
         return false;
       } else if(first_ == nullptr ^ rhs.first_ == nullptr) {
@@ -198,7 +198,7 @@ class List {
 
 
     /* checks if two lists are inequal */
-    bool operator!=(List const& rhs) {
+    bool operator!=(List const& rhs) const {
       if(List<T>::operator==(rhs) == true) {
         return false;
       } return true;
@@ -214,7 +214,7 @@ class List {
     /* returns iterator to the first element */
     ListIterator<T> begin() {
       //return ListIterator<T>{first_}; // not certain, not tested
-      return{};
+      return {};
     }
 
 
@@ -236,11 +236,11 @@ class List {
 
 
     /* ... */
-    //TODO: member function insert (Aufgabe 3.12)
+    //TODO: member function insert (Aufgabe 3.13)
 
 
     /* ... */
-    //TODO: member function insert (Aufgabe 3.13)
+    //TODO: member function insert (Aufgabe 3.14)
 
 
     /* reverses the list */
