@@ -44,6 +44,7 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 
 /*--------------- own tests -----------------------------------------------------------------------*/
 
+
 // task 3.4
 TEST_CASE("remove all elements with clear", "[clear]") {
   List<int> list{};
@@ -69,6 +70,7 @@ TEST_CASE("remove all elements with clear", "[clear]") {
   }
 
 }
+
 
 // task 3.5
 TEST_CASE("copying all elements into another list", "[copy_constructor]") {
@@ -106,6 +108,7 @@ TEST_CASE("copying all elements into another list", "[copy_constructor]") {
 
 } 
 
+
 // task 3.6
 TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   List<int> list{};
@@ -117,6 +120,7 @@ TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   list = list2;
   REQUIRE(list == list2);
 }
+
 
 // task 3.7
 TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
@@ -165,6 +169,7 @@ TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
 
 }
 
+
 /*
 // task 3.7
 TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
@@ -197,7 +202,6 @@ TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
     REQUIRE((reverse(list) == reverse(list2)));
     REQUIRE((reverse(list) == reverse(list2)));
   }
-
 
 }*/
 
@@ -233,6 +237,7 @@ TEST_CASE("Check lists for equality and inequality", "[compare]") {
   }
 
 }
+
 
 // task 3.9
 TEST_CASE("move constructor", "[constructor]") {

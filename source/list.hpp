@@ -105,7 +105,9 @@ struct ListIterator {
   ListNode <T>* node = nullptr;
 };
 
+
 /*--------------- class List ----------------------------------------------------------------*/
+
 
 template <typename T>
 class List {
@@ -137,9 +139,9 @@ class List {
 
     /* copy constructor using Deep-Copy semantics */
     List(List<T> const& rhs) :
-      size_ {rhs.size_},
-      first_ {rhs.first_},
-      last_ {rhs.last_} {
+      size_   {rhs.size_},
+      first_  {rhs.first_},
+      last_   {rhs.last_} {
         rhs.size_  = 0;
         for(auto i = 0; i < rhs.size_; ++i) {
           push_back(first_->value);
@@ -158,6 +160,7 @@ class List {
         rhs.last_  = nullptr;
       }
 
+
     /* calls initializer_list constructor */
     List(std::initializer_list<T> ini_list) {
       for (auto i = 0; i < ini_list.size(); ++i) {
@@ -171,6 +174,7 @@ class List {
       rhs.swap(*this);
       return *this;
     }
+
 
     /* checks if two lists are equal */
     bool operator==(List const& rhs) {
@@ -192,6 +196,7 @@ class List {
       }
     }
 
+
     /* checks if two lists are inequal */
     bool operator!=(List const& rhs) {
       if(List<T>::operator==(rhs) == true) {
@@ -199,10 +204,12 @@ class List {
       } return true;
     } 
 
-    /* deletes all elements and the list itself */
+
+    /* destructor */
     ~List() {
       clear();
     }
+
 
     /* returns iterator to the first element */
     ListIterator<T> begin() {
@@ -210,13 +217,16 @@ class List {
       return{};
     }
 
-    /* returns iterator to the element after the last element */
+
+    /* returns iterator to the 
+    element after the last element */
     ListIterator<T> end() {
       //return ListIterator<T>{nullptr}; // not certain, not tested
       return{};
     }
 
-    /* deletes all elements of the list */ 
+
+    /* deletes all elements */ 
     void clear() {
       auto tmp_size = size_;
       for(auto i = 0; i < tmp_size; ++i) {
@@ -224,11 +234,14 @@ class List {
       }
     }
 
+
     /* ... */
     //TODO: member function insert (Aufgabe 3.12)
 
+
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
+
 
     /* reverses the list */
     void reverse() {
@@ -245,6 +258,7 @@ class List {
           last_          = old_first;
     }
 
+
     /* adds element to the beginning of list */
     void push_front(T const& element) {
       ListNode<T>* tmp = new ListNode<T>{element};
@@ -259,6 +273,7 @@ class List {
         last_->next  = nullptr;
     }
 
+
     /* adds element to the end of the list */
     void push_back(T const& element) {
       ListNode<T>* tmp = new ListNode<T>{element};
@@ -272,6 +287,7 @@ class List {
         first_->prev = nullptr;
         last_->next  = nullptr;
     }
+
 
     /* deletes first element */
     void pop_front() {
@@ -291,6 +307,7 @@ class List {
       }
     }
 
+
     /* deletes last element */
     void pop_back() {
       if(empty()) {
@@ -309,12 +326,14 @@ class List {
       }
     }
 
+
     /* returns reference to first element */
     T& front() {
       if(empty()) {
         throw "List is empty";
       } return first_->value;
     }
+
 
     /* returns reference to last element */
     T& back() {
@@ -323,17 +342,18 @@ class List {
       } return last_->value;
     }
 
-    /* task 3.2
-     * checks if list is empty */
+
+    /* checks if list is empty */
     bool empty() const {
       return first_ == nullptr;
     };
 
-    /* task 3.2
-     * returns the number of elements in the list */
+    
+    /* returns the number of elements in the list */
     std::size_t size() const {      
       return size_;
   };
+
 
   /* list members */
   private: 
@@ -342,7 +362,9 @@ class List {
     ListNode<T>* last_;
 };
 
+
 /*--------------- free functions --------------------------------------------------------------*/
+
 
 /* (free) reverse the list */  // Bus error: 10
 template <typename T>
@@ -352,6 +374,7 @@ List<T> reverse(List<T> const& lhs) {
   return r;
 }
 
+
 /* (free) adds elements of a list in another list */
 template <typename T>
 List<T> operator+(List<T> const& lhs, List<T> const& rhs) { //move constr. useful
@@ -359,5 +382,6 @@ List<T> operator+(List<T> const& lhs, List<T> const& rhs) { //move constr. usefu
   for(auto const& c : rhs) r.push_back(c);
   return r;
 }
+
 
 #endif // #define BUW_LIST_HPP
