@@ -212,9 +212,7 @@ class List {
 
     /* checks if two lists are inequal */
     bool operator!=(List const& rhs) const {
-      if(operator==(rhs) == true) {
-        return false;
-      } return true;
+      return !(operator==(rhs));
     } 
 
 
@@ -225,14 +223,14 @@ class List {
 
 
     /* returns iterator to the first element */
-    ListIterator<T> begin() {
+    ListIterator<T> begin() const {
       return ListIterator<T>{first_};
     }
 
 
     /* returns iterator to the 
     element after the last element */
-    ListIterator<T> end() {
+    ListIterator<T> end() const {
       return ListIterator<T>{nullptr};
     }
 
@@ -388,10 +386,15 @@ List<T> reverse(List<T> const& lhs) {
 
 /* (free) adds elements of a list to another list */
 template <typename T>
-List<T> operator+(List<T> const& lhs, List<T> const& rhs) { //move constr. useful
-  //List<T> r{lhs}; 
-  //for(auto const& c : rhs) r.push_back(c);
-  //return;
+List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
+  List<T> r{lhs};
+  for(auto const& c: rhs) {
+    r.push_back(c);
+  } return r;
+  /*List<T> r{lhs}; 
+  for(auto i = 0; i < rhs.size(); ++i) {
+    r.push_back(rhs.begin() +i);
+  } return r;*/
 }
 
 
