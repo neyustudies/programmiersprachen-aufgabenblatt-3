@@ -35,11 +35,11 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/end.test"
 
 //iterator tests
-//#include "sub_tests/iterators/operator_star.test"
-//#include "sub_tests/iterators/operator_arrow.test"
-//#include "sub_tests/iterators/operator_equals.test"
-//#include "sub_tests/iterators/operator_does_not_equal.test"
-//#include "sub_tests/iterators/operator_iterate_forward.test"
+#include "sub_tests/iterators/operator_star.test"
+#include "sub_tests/iterators/operator_arrow.test"
+#include "sub_tests/iterators/operator_equals.test"
+#include "sub_tests/iterators/operator_does_not_equal.test"
+#include "sub_tests/iterators/operator_iterate_forward.test"
 
 
 /*--------------- own tests -----------------------------------------------------------------------*/
@@ -256,37 +256,46 @@ TEST_CASE("initializer list constructor", "[init-constructor]") {
   List<int> int_list2{9, 5, 38, 100};
   List<int> int_list3{7, 5, 38, 200};
   List<int> int_list4{7, 5, 38, 200};
+  
+  REQUIRE(int_list1.front() == 9);
+  REQUIRE(int_list1.back() == 100);
+  REQUIRE(int_list3.front() == 7);
+  REQUIRE(int_list3.back() == 200);
   REQUIRE(int_list1.size() == 4);
   REQUIRE(int_list1 == int_list2);
   REQUIRE(int_list3 == int_list4);
   REQUIRE(int_list3.front() == int_list4.front());
   REQUIRE(int_list3.back() == int_list4.back());
-  REQUIRE(int_list1.back() == int_list2.back());
   REQUIRE_FALSE(int_list1.back() == int_list3.back());
   REQUIRE_FALSE(int_list1.front() == int_list3.front());
   REQUIRE_FALSE(int_list1.front() == int_list4.front());
+  int_list4.push_back(4);
+  REQUIRE(int_list4.size() == 5);
 }
 
 // task 3.10
-/*TEST_CASE("free operator+ adds elements of a list into another list", "[free-operator+]") {
-
+TEST_CASE("free operator+ adds elements of a list into another list", "[free-operator+]") {
   List<int> a{1, 2};
   List<int> b{5, 6};
   List<int> c{1, 2, 5, 6};
-  List<int> d{a + b};
-  //d = a + b;
-  REQUIRE(d.size() == c.size()); 
+  List<int> d = a + b;
+  REQUIRE(d.size() == c.size());
+
+  List<int> list1;
+  List<int> list2;
+  list1.push_back(10);
+  list1.push_back(20);
+  list2.push_back(30);
+  list2.push_back(40);
+  List<int> list3 = list1 + list2;
+  REQUIRE(list3.front() == 10);
+  REQUIRE(list3.back() == 40);
+
   auto l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};
   List<int> m{1, 2, 3, 4, 5, 6, 7, 8, 9};
+  //td::copy( m.begin(),m.end(), std::ostream_iterator<int> (std::cout , "\n"));
   REQUIRE(l.size() == m.size());
-  List <int> int_list {9, 5, 38, 100};*/
-  
-  /* failed:
-   REQUIRE( d.size() == c.size() )
-   with expansion:
-   2 == 4
-  
-}*/
+}
 
 
 int main(int argc, char *argv[]) {
