@@ -51,24 +51,18 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     } node = node->next;
-      return *this;
-
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.12 - Teil 3)   
+      return *this; 
   }
 
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
-     call:  it++, advances one element forward*/
+                    call: it++, advances one element forward*/
   ListIterator<T> operator++(int) {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     } ListIterator<T> tmp = *this;
       ++(*this);
-      return tmp;
-
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.12 - Teil 4)
+      return tmp;   
   }
 
 
@@ -235,8 +229,22 @@ class List {
     }
 
 
-    /* ... */
-    //TODO: member function insert (Aufgabe 3.13)
+    /* inserts x at position pos, result points to insertion point*/
+    ListIterator<T> insert(ListIterator<T> const& pos, T const& x) {
+      if(pos.node == first_){
+        push_front(x);
+        return begin();
+        } else if(pos.node == nullptr) {
+          push_back(x);
+          return ListIterator<T>{last_};
+          } else {
+            ListNode<T>* tmp = new ListNode<T>{x, pos.node->prev, pos.node};
+            in->prev->next = tmp;
+            in->next->prev = tmp;
+            ++size_;
+            return ListIterator<T>{tmp};
+            }
+    }
 
 
     /* ... */
@@ -375,7 +383,8 @@ List<T> reverse(List<T> const& lhs) {
 }
 
 
-/* (free) adds elements of a list to another list */
+/* 
+(free) adds elements of a list to another list */
 template <typename T>
 List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
   List<T> r{lhs};
