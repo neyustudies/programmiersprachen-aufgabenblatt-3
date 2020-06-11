@@ -135,7 +135,7 @@ class List {
       first_  {nullptr},
       last_   {nullptr} {
         auto tmp = rhs.first_; 
-        for(auto i = 0; i < rhs.size_; ++i) {
+        for(unsigned i = 0; i < rhs.size_; ++i) {
           push_back(tmp->value);
           tmp = tmp->next;
         }
@@ -191,7 +191,7 @@ class List {
       } else {
         auto lhs_elem = first_;
         auto rhs_elem = rhs.first_;
-        for(auto i = 0; i < size_; ++i) {
+        for(unsigned i = 0; i < size_; ++i) {
           if(lhs_elem->value != rhs_elem->value) {
             return false;
           } rhs_elem = rhs_elem->next;
@@ -229,7 +229,7 @@ class List {
     /* deletes all elements */ 
     void clear() {
       auto tmp_size = size_;
-      for(auto i = 0; i < tmp_size; ++i) {
+      for(unsigned i = 0; i < tmp_size; ++i) {
         pop_back();
       }
     }
@@ -248,7 +248,7 @@ class List {
       if(empty()) {
         throw "List is empty";
       } auto tmp = first_;
-        for(auto i = 0; i < size_; ++i) {
+        for(unsigned i = 0; i < size_; ++i) {
           auto old_prev  = tmp->prev;
           tmp->prev      = tmp->next;
           tmp->next      = old_prev;
