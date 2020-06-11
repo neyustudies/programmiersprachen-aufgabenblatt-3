@@ -115,7 +115,17 @@ TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   list.push_back(8);
   list.push_back(9);
   List<int> list2{};
+  REQUIRE_FALSE(list == list2);
   list = list2;
+  REQUIRE(list == list2);
+  list.clear();
+  REQUIRE(list.empty());
+  REQUIRE(list2.empty());
+  list.push_back(5);
+  list.push_back(6);
+  list.push_back(8);
+  list.push_back(9);
+  list2 = list;
   REQUIRE(list == list2);
 }
 
@@ -233,7 +243,7 @@ TEST_CASE("Check lists for equality and inequality", "[compare]") {
 }
 
 
-// task 3.9
+// task 3.14
 TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   List<int> rhs; 
   rhs.push_front(1); 
@@ -247,10 +257,25 @@ TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   REQUIRE(rhs.empty());
   REQUIRE(new_list.size() == 4); 
   REQUIRE_FALSE(new_list.empty());
+
+  List<int> rhs2; 
+  rhs2.push_back(1000); 
+  rhs2.push_back(2000); 
+  rhs2.push_back(3000); 
+  rhs2.push_back(4000);
+  List<int> new_list2;
+  REQUIRE(new_list2.size() == 0); 
+  new_list2 = std::move(rhs2); 
+  REQUIRE(rhs2.size() == 0); 
+  REQUIRE(rhs2.empty());
+  REQUIRE(new_list2.size() == 4);
+  REQUIRE(new_list2.front() == 1000);
+  REQUIRE(new_list2.back() == 4000);    
+  REQUIRE_FALSE(new_list2.empty());
 }
 
 
-// task 3.10
+// task 3.15 optional
 TEST_CASE("initializer list constructor", "[init-constructor]") {
   List<int> int_list1{9, 5, 38, 100};
   List<int> int_list2{9, 5, 38, 100};
@@ -273,7 +298,8 @@ TEST_CASE("initializer list constructor", "[init-constructor]") {
   REQUIRE(int_list4.size() == 5);
 }
 
-// task 3.10
+
+// task 3.15 optional
 TEST_CASE("free operator+ adds elements of a list into another list", "[free-operator+]") {
   List<int> a{1, 2};
   List<int> b{5, 6};
@@ -290,11 +316,18 @@ TEST_CASE("free operator+ adds elements of a list into another list", "[free-ope
   List<int> list3 = list1 + list2;
   REQUIRE(list3.front() == 10);
   REQUIRE(list3.back() == 40);
+}
 
+
+// task 3.15 optional
+// l is move-constructed from temporary list objects
+TEST_CASE("count calls of move-constructor", "[count-operator+]") {
   auto l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};
   List<int> m{1, 2, 3, 4, 5, 6, 7, 8, 9};
-  //td::copy( m.begin(),m.end(), std::ostream_iterator<int> (std::cout , "\n"));
-  REQUIRE(l.size() == m.size());
+  std::copy( l.begin(),l.end(), m.begin()); // (first, last, result)
+  for(auto const& i : l) {
+    std::cout << i << ", ";
+  } std::cout << "\n";
 }
 
 
