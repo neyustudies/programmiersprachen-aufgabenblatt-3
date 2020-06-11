@@ -239,8 +239,8 @@ class List {
           return ListIterator<T>{last_};
           } else {
             ListNode<T>* tmp = new ListNode<T>{x, pos.node->prev, pos.node};
-            in->prev->next = tmp;
-            in->next->prev = tmp;
+            tmp->prev->next = tmp;
+            tmp->next->prev = tmp;
             ++size_;
             return ListIterator<T>{tmp};
             }

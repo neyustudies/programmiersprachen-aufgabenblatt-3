@@ -331,6 +331,27 @@ TEST_CASE("count calls of move-constructor", "[count-operator+]") {
 }
 
 
+// task 3.11
+TEST_CASE("inserted node should be at correct position", "[insert]") {
+  List<int> k;
+  k.push_back(33);
+  k.push_back(2);
+  k.push_back(86);
+  k.insert(k.begin(), 999);
+  REQUIRE(k.front() == 999);
+  k.insert(k.end(), 4783);
+  REQUIRE(k.back() == 4783);
+
+  List<int> t{33, 2, 86, 46, 2, 567};
+  t.insert(t.begin(), 999);
+  t.insert(t.end(), 4783);
+  REQUIRE(t.front() == 999);
+  REQUIRE(t.back() == 4783);
+  List<int> v{999, 33, 2, 86, 46, 2, 567, 4783};
+  REQUIRE(t == v);
+}
+
+
 int main(int argc, char *argv[]) {
   return Catch::Session().run(argc, argv);
 }
