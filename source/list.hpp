@@ -42,7 +42,7 @@ struct ListIterator {
   T* operator->() const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
-    } return &node->value;
+    } return &this->operator*(); // &node->value
   }
 
 
@@ -72,7 +72,7 @@ struct ListIterator {
   }
 
 
-  /* Inequality-Operation for Iterator  */
+  /* Inequality-Operation for Iterator */
   bool operator!=(ListIterator<T> const& x) const {
     return !(x == *this);
   }
@@ -149,12 +149,9 @@ class List {
 
 
     /* calls initializer_list constructor */
-    List(std::initializer_list<T> const& ini_list) :
-      size_   {0},
-      first_  {nullptr},
-      last_   {nullptr} {
-        for(auto const& r : ini_list) {
-          push_back(r);
+    List(std::initializer_list<T> const& ini_list) : List() {
+        for(auto const& elem : ini_list) {
+          push_back(elem);
         }
       }
 
@@ -182,7 +179,7 @@ class List {
         return false;
       } else if(first_ == nullptr && rhs.first_ == nullptr) {
         return true;
-      } else {
+      } else { 
         auto lhs_elem = first_;
         auto rhs_elem = rhs.first_;
         for(unsigned i = 0; i < size_; ++i) {
@@ -197,7 +194,7 @@ class List {
 
     /* checks if two lists are inequal */
     bool operator!=(List const& rhs) const {
-      return !(operator==(rhs));
+      return !(rhs == *this);
     } 
 
 
@@ -229,7 +226,7 @@ class List {
     }
 
 
-    /* inserts x at position pos, result points to insertion point*/
+    /* inserts x at position pos, iterator pointing to insertion point */
     ListIterator<T> insert(ListIterator<T> const& pos, T const& x) {
       if(pos.node == first_){
         push_front(x);
@@ -237,7 +234,7 @@ class List {
         } else if(pos.node == nullptr) {
           push_back(x);
           return ListIterator<T>{last_};
-          } else {
+          } else {              // ListNode<T>{T value, prev, next}
             ListNode<T>* tmp = new ListNode<T>{x, pos.node->prev, pos.node};
             tmp->prev->next = tmp;
             tmp->next->prev = tmp;
@@ -247,8 +244,16 @@ class List {
     }
 
 
-    /* ... */
-    //TODO: member function insert (Aufgabe 3.14)
+    /* deletes a node at position pos, iterator pointing to next node */
+    ListIterator<T> erase(ListIterator<T> const& pos) {
+      ListNode<T>* tmp = pos.node;
+      tmp->next->prev = tmp->prev;
+      tmp->prev->next = tmp->next;
+      auto it = ListIterator<T>{tmp->next};
+      delete tmp;
+      --size_;
+      return it;
+    }
 
 
     /* reverses the list */
