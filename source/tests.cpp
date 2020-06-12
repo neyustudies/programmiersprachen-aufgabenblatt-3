@@ -243,7 +243,7 @@ TEST_CASE("Check lists for equality and inequality", "[compare]") {
 }
 
 
-// task 3.11
+// task 3.11 optional
 TEST_CASE("inserted node should be at correct position", "[insert]") {
   List<int> k;
   k.push_back(33);
@@ -277,7 +277,7 @@ TEST_CASE("node at position should be removed", "[erase]") {
   u.push_back(14);
   REQUIRE(u.front() == 357);
   //u.erase(u.begin());
-  //REQUIRE(u.front() == 96);      //Segmentation violation signal
+  //REQUIRE(u.front() == 96);    // Segmentation violation signal
 } 
 
 
@@ -285,43 +285,44 @@ TEST_CASE("node at position should be removed", "[erase]") {
 TEST_CASE("compare list to vector", "[has_same_content]") {
   List<int> list{45, 32, 3, 8};
   std::vector<int> vector{};
-  //std::copy(list.begin(), list.end(), vector.begin());
-  /* for(auto const& i : list) {
-    std::cout << i << ", ";
-  } */ // Segmentation fault (core dumped)
-  //REQUIRE_FALSE(has_same_content(list, vector));  
-} //Segmentation violation signal
+  vector.reserve(list.size());
+  std::copy(list.begin(), list.end(), std::back_inserter(vector));
+  REQUIRE(has_same_content(list, vector));  
+}
 
 
 // task 3.14
 TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
-  List<int> rhs; 
-  rhs.push_front(1); 
-  rhs.push_front(2); 
-  rhs.push_front(3); 
-  rhs.push_front(4);
-  List<int> new_list;
-  REQUIRE(new_list.size() == 0); 
-  new_list = std::move(rhs); 
-  REQUIRE(rhs.size() == 0); 
-  REQUIRE(rhs.empty());
-  REQUIRE(new_list.size() == 4); 
-  REQUIRE_FALSE(new_list.empty());
 
-  List<int> rhs2{1000, 2000, 3000, 4000}; 
-  List<int> new_list2;
-  REQUIRE(new_list2.size() == 0); 
-  new_list2 = std::move(rhs2); 
-  REQUIRE(rhs2.size() == 0); 
-  REQUIRE(rhs2.empty());
-  REQUIRE(new_list2.size() == 4);
-  REQUIRE(new_list2.front() == 1000);
-  REQUIRE(new_list2.back() == 4000);    
-  REQUIRE_FALSE(new_list2.empty());
+  SECTION("list of pushed elements should be moved") {
+    List<int> rhs; 
+    rhs.push_front(1); 
+    rhs.push_front(2); 
+    rhs.push_front(3); 
+    rhs.push_front(4);
+    List<int> new_list;
+    REQUIRE(new_list.size() == 0); 
+    new_list = std::move(rhs); 
+    REQUIRE(rhs.size() == 0); 
+    REQUIRE(rhs.empty());
+    REQUIRE(new_list.size() == 4); 
+    REQUIRE_FALSE(new_list.empty());}
+
+  SECTION("initializer list should be moved") {
+    List<int> rhs2{1000, 2000, 3000, 4000}; 
+    List<int> new_list2;
+    REQUIRE(new_list2.size() == 0); 
+    new_list2 = std::move(rhs2); 
+    REQUIRE(rhs2.size() == 0); 
+    REQUIRE(rhs2.empty());
+    REQUIRE(new_list2.size() == 4);
+    REQUIRE(new_list2.front() == 1000);
+    REQUIRE(new_list2.back() == 4000);    
+    REQUIRE_FALSE(new_list2.empty());}
 }
 
 
-// task 3.15 optional
+// task 3.15 part 1 optional
 TEST_CASE("initializer list constructor", "[init-constructor]") {
   List<int> int_list1{9, 5, 38, 100};
   List<int> int_list2{9, 5, 38, 100};
@@ -345,7 +346,7 @@ TEST_CASE("initializer list constructor", "[init-constructor]") {
 }
 
 
-// task 3.15 optional
+// task 3.15 part 2 optional
 TEST_CASE("adds elements of a list into another list", "[free-operator+]") {
   List<int> a{1, 2};
   List<int> b{5, 6};
@@ -365,7 +366,7 @@ TEST_CASE("adds elements of a list into another list", "[free-operator+]") {
 }
 
 
-// task 3.15 optional
+// task 3.15 part 3 optional
 // l is move-constructed from temporary list objects
 TEST_CASE("count calls of move-constructor", "[count-operator+]") {
   auto l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};
@@ -376,7 +377,6 @@ TEST_CASE("count calls of move-constructor", "[count-operator+]") {
     std::cout << i << ", ";
   } std::cout << "\n";
 }
-
 
 
 int main(int argc, char *argv[]) {
