@@ -243,6 +243,44 @@ TEST_CASE("Check lists for equality and inequality", "[compare]") {
 }
 
 
+// task 3.11
+TEST_CASE("inserted node should be at correct position", "[insert]") {
+  List<int> k;
+  k.push_back(33);
+  k.push_back(2);
+  k.push_back(86);
+  k.insert(k.begin(), 999);
+  REQUIRE(k.front() == 999);
+  k.insert(k.end(), 4783);
+  REQUIRE(k.back() == 4783);
+
+  List<int> t{33, 2, 86, 46, 2, 567};
+  t.insert(t.begin(), 999);
+  REQUIRE(t.size() == 7);
+  t.insert(t.end(), 4783);
+  REQUIRE(t.front() == 999);
+  REQUIRE(t.back() == 4783);
+  REQUIRE(t.size() == 8);    
+  List<int> v{999, 33, 2, 86, 46, 2, 567, 4783};
+  REQUIRE(t == v);
+  t.insert(t.begin()++, 222);
+  REQUIRE(t.size() == 9);
+}
+
+
+// task 3.12 optional
+TEST_CASE("node at position should be removed", "[erase]") {
+  List<int> u;
+  u.push_back(357);
+  u.push_back(96);
+  u.push_back(2);
+  u.push_back(14);
+  REQUIRE(u.front() == 357);
+  //u.erase(u.begin());
+  //REQUIRE(u.front() == 96);      //Segmentation violation signal
+} 
+
+
 // task 3.14
 TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   List<int> rhs; 
@@ -324,32 +362,13 @@ TEST_CASE("free operator+ adds elements of a list into another list", "[free-ope
 TEST_CASE("count calls of move-constructor", "[count-operator+]") {
   auto l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};
   List<int> m{1, 2, 3, 4, 5, 6, 7, 8, 9};
-  std::copy( l.begin(),l.end(), m.begin()); // (first, last, result)
+  std::cout << "[task 3.15]  ";
+  std::copy( l.begin(), l.end(), m.begin()); // (first, last, result)
   for(auto const& i : l) {
     std::cout << i << ", ";
   } std::cout << "\n";
 }
 
-
-// task 3.11
-TEST_CASE("inserted node should be at correct position", "[insert]") {
-  List<int> k;
-  k.push_back(33);
-  k.push_back(2);
-  k.push_back(86);
-  k.insert(k.begin(), 999);
-  REQUIRE(k.front() == 999);
-  k.insert(k.end(), 4783);
-  REQUIRE(k.back() == 4783);
-
-  List<int> t{33, 2, 86, 46, 2, 567};
-  t.insert(t.begin(), 999);
-  t.insert(t.end(), 4783);
-  REQUIRE(t.front() == 999);
-  REQUIRE(t.back() == 4783);
-  List<int> v{999, 33, 2, 86, 46, 2, 567, 4783};
-  REQUIRE(t == v);
-}
 
 
 int main(int argc, char *argv[]) {
