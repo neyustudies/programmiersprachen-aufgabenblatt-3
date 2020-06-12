@@ -4,7 +4,7 @@
 #include <cstddef>  //ptrdiff_t
 #include <iterator> //std::bidirectional_iterator_tag
 #include <iostream>
-
+#include <vector>
 #include <initializer_list>
 
 template <typename T>
@@ -124,10 +124,7 @@ class List {
 
     /* copy constructor 
     using Deep-Copy semantics */
-    List(List<T> const& rhs) :
-      size_   {0},
-      first_  {nullptr},
-      last_   {nullptr} {
+    List(List<T> const& rhs) : List() {
         auto tmp = rhs.first_; 
         for(unsigned i = 0; i < rhs.size_; ++i) {
           push_back(tmp->value);
@@ -388,14 +385,23 @@ List<T> reverse(List<T> const& lhs) {
 }
 
 
-/* 
-(free) adds elements of a list to another list */
+/* (free) adds elements of a list to another list */
 template <typename T>
 List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
   List<T> r{lhs};
   for(auto const& c : rhs) {
     r.push_back(c);
   } return r;   
+}
+
+/* (free) returns true if list and vector are equal */
+template <typename T>
+bool has_same_content(List<T> const& list, std::vector<T> const& vec) {
+  bool equal = false;
+	std::vector<T> vecA(list.begin(), list.end());
+	if (vecA == vec) {
+		equal = true;
+	} return equal;
 }
 
 
