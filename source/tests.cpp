@@ -130,7 +130,7 @@ TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
 }
 
 
-// task 3.7
+// task 3.7 part 1
 TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
   List<int> list1{};
   List<int> list2{};
@@ -177,7 +177,7 @@ TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
 }
 
 
-// task 3.7
+// task 3.7 part 2
 TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
   List<int> list{};
   List<int> list2{};
@@ -281,6 +281,18 @@ TEST_CASE("node at position should be removed", "[erase]") {
 } 
 
 
+// task 3.13 optional
+TEST_CASE("compare list to vector", "[has_same_content]") {
+  List<int> list{45, 32, 3, 8};
+  std::vector<int> vector{};
+  //std::copy(list.begin(), list.end(), vector.begin());
+  /* for(auto const& i : list) {
+    std::cout << i << ", ";
+  } */ // Segmentation fault (core dumped)
+  //REQUIRE_FALSE(has_same_content(list, vector));  
+} //Segmentation violation signal
+
+
 // task 3.14
 TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   List<int> rhs; 
@@ -296,11 +308,7 @@ TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
   REQUIRE(new_list.size() == 4); 
   REQUIRE_FALSE(new_list.empty());
 
-  List<int> rhs2; 
-  rhs2.push_back(1000); 
-  rhs2.push_back(2000); 
-  rhs2.push_back(3000); 
-  rhs2.push_back(4000);
+  List<int> rhs2{1000, 2000, 3000, 4000}; 
   List<int> new_list2;
   REQUIRE(new_list2.size() == 0); 
   new_list2 = std::move(rhs2); 
@@ -338,7 +346,7 @@ TEST_CASE("initializer list constructor", "[init-constructor]") {
 
 
 // task 3.15 optional
-TEST_CASE("free operator+ adds elements of a list into another list", "[free-operator+]") {
+TEST_CASE("adds elements of a list into another list", "[free-operator+]") {
   List<int> a{1, 2};
   List<int> b{5, 6};
   List<int> c{1, 2, 5, 6};
