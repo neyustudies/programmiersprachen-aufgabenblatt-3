@@ -49,21 +49,21 @@
   - [x] end()
 
 3.12
-  - [ ] operator*()
-  - [ ] operator->()
-  - [ ] operator++()
-  - [ ] operator++(int)
-  - [ ] operator==()
-  - [ ] operator!=()
+  - [x] operator*()
+  - [x] operator->()
+  - [x] operator++()
+  - [x] operator++(int)
+  - [x] operator==()
+  - [x] operator!=()
   
 3.13
-  - [ ] insert()
-  - [ ] tests for insert()
+  - [x] insert()
+  - [x] tests for insert()
 
 3.14
-  - [ ] erase()
-  - [ ] tests for erase()
+  - [x] erase()
+  - [x] tests for erase()
 
 3.15
-  - [ ] has_same_content() free function
-  - [ ] tests for has_same_content()
+  - [x] has_same_content() free function
+  - [x] tests for has_same_content()
