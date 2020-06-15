@@ -1,0 +1,10 @@
+// l is move-constructed from temporary list objects
+TEST_CASE("count calls of move-constructor", "[count-operator+]") {
+  auto l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};
+  List<int> m{1, 2, 3, 4, 5, 6, 7, 8, 9};
+  std::cout << "[task 3.15]  ";
+  std::copy( l.begin(), l.end(), m.begin()); // (first, last, result)
+  for(auto const& i : l) {
+    std::cout << i << ", ";
+  } std::cout << "\n";
+}

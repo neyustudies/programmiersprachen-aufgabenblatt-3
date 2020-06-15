@@ -1,0 +1,31 @@
+TEST_CASE("move all elements from rhs to a new list", "[move-constructor]") {
+
+  SECTION("list of pushed elements should be moved") {
+    List<int> rhs; 
+    rhs.push_front(1); 
+    rhs.push_front(2); 
+    rhs.push_front(3); 
+    rhs.push_front(4);
+    List<int> new_list;
+    REQUIRE(new_list.size() == 0); 
+    new_list = std::move(rhs); 
+    REQUIRE(rhs.size() == 0); 
+    REQUIRE(rhs.empty());
+    REQUIRE(new_list.size() == 4); 
+    REQUIRE_FALSE(new_list.empty());}
+
+  SECTION("initializer list should be moved") {
+    List<int> rhs2{1000, 2000, 3000, 4000}; 
+    List<int> new_list2;
+    REQUIRE(new_list2.size() == 0); 
+    new_list2 = std::move(rhs2); 
+    REQUIRE(rhs2.size() == 0); 
+    REQUIRE(rhs2.empty());
+    REQUIRE(new_list2.size() == 4);
+    REQUIRE(new_list2.front() == 1000);
+    REQUIRE(new_list2.back() == 4000);    
+    REQUIRE_FALSE(new_list2.empty());}
+}
+
+
+// task 3.15 optional
