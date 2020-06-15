@@ -1,0 +1,79 @@
+// member-reverse
+TEST_CASE("member-reverse the order of a list", "[member_reverse]") {
+  List<int> list1{};
+  List<int> list2{};
+
+  SECTION("reverse a list of 1 element") {
+    list1.push_back(1);
+    list2.push_back(1);
+    list1.reverse();
+    list2.reverse();
+    REQUIRE(list1 == list2);
+  }
+
+  SECTION("reverse a list of 2 elements") {
+    list1.push_back(1);
+    list1.push_back(3);
+    list2.push_back(3);
+    list2.push_back(1);
+    list2.reverse();
+    REQUIRE(list1 == list2);
+  }
+
+  SECTION("reverse a list of more than 2 elements") {
+    list1.push_back(3);
+    list1.push_back(4);
+    list1.push_back(5);
+    list1.push_back(6);
+    list1.push_back(7);
+    list1.push_back(8);
+    list2.push_back(8);
+    list2.push_back(7);
+    list2.push_back(6);
+    list2.push_back(5);
+    list2.push_back(4);
+    list2.push_back(3);
+    list2.reverse();
+    REQUIRE(list1 == list2);
+    list2.reverse();
+    list1.reverse();
+    REQUIRE(list1 == list2);
+    list2.reverse();
+    list1.reverse();
+    REQUIRE(list1 == list2);
+  }
+}
+
+
+// free reverse
+TEST_CASE("free-reverse the order of a list", "[free_reverse]") {
+  List<int> list{};
+  List<int> list2{};
+
+
+  SECTION("free-reverse a list of 2 elements") {
+     list.push_back(1);
+     list.push_back(3);
+    list2.push_back(3);
+    list2.push_back(1);
+    REQUIRE(list == reverse(list2));
+  }
+
+  SECTION("free-reverse a list of more than 2 elements") {
+     list.push_back(3);
+     list.push_back(4);
+     list.push_back(5);
+     list.push_back(6);
+     list.push_back(7);
+     list.push_back(8);
+    list2.push_back(8);
+    list2.push_back(7);
+    list2.push_back(6);
+    list2.push_back(5);
+    list2.push_back(4);
+    list2.push_back(3);
+    REQUIRE((list == reverse(list2)));
+    REQUIRE((reverse(list) == (list2)));
+    REQUIRE(((list) == reverse(list2)));
+  }
+}

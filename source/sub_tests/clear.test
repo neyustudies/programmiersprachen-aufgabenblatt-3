@@ -1,0 +1,23 @@
+TEST_CASE("remove all elements with clear", "[clear]") {
+  List<int> list{};
+
+  SECTION("4 elements to be cleared") {
+    list.push_back(5);
+    list.push_back(6);
+    list.push_back(8);
+    list.push_back(9);
+    list.clear();
+    REQUIRE(list.empty());
+  }
+
+  SECTION("1 element to be cleared") {
+    list.push_back(3);
+    list.clear();
+    REQUIRE(list.empty());
+  }
+    
+  SECTION("0 elements to be cleared") {
+    list.clear();
+    REQUIRE(list.empty());
+  }
+}

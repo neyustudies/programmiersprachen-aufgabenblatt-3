@@ -1,0 +1,15 @@
+TEST_CASE("compare list to vector", "[has_same_content]") {
+  List<int> empty_List{};
+  std::vector<int> empty_vector{};
+  REQUIRE(has_same_content(empty_List, empty_vector));  
+
+  List<int>        k{2, 46, 41, 456, 3, 8};
+  std::vector<int> m{2, 46, 41, 456, 3, 8};
+  REQUIRE(has_same_content(k, m));  
+
+  List<int> list{45, 32, 3, 8};
+  std::vector<int> vector{};
+  vector.reserve(list.size());
+  std::copy(list.begin(), list.end(), std::back_inserter(vector));
+  REQUIRE(has_same_content(list, vector));  
+}
