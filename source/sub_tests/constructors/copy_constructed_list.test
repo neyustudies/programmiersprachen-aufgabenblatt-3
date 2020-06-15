@@ -1,0 +1,33 @@
+TEST_CASE("copying all elements into another list", "[copy_constructor]") {
+
+  SECTION("copy-construct an empty list and compare both lists") {
+    List<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    List<int> list2{list};
+    REQUIRE_FALSE(list2.empty());
+    REQUIRE(list2 == list);
+    list2.clear();
+    REQUIRE(list2.empty());
+  }
+
+  SECTION("copy-construct a non empty list and compare both lists") {
+    List<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    List<int> list2;
+    list.push_front(8);
+    list.push_front(7);
+    list.push_front(6);
+    list.push_front(5);
+    List<int> list3{list};
+    REQUIRE_FALSE((list3.empty()));
+    REQUIRE(list3 == list);
+    list3.clear();
+    REQUIRE((list3.empty()));
+  }
+} 
