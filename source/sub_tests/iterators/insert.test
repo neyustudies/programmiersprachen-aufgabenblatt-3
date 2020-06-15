@@ -1,0 +1,42 @@
+TEST_CASE("inserted node should be at correct position", "[insert]") {
+  List<int> k;
+  k.push_back(33);
+  k.push_back(2);
+  k.push_back(86);
+  k.insert(k.begin(), 999);
+  REQUIRE(k.front() == 999);
+  k.insert(k.end(), 4783);
+  REQUIRE(k.back() == 4783);
+
+  List<int> t{33, 2, 86, 46, 2, 567};
+  t.insert(t.begin(), 999);
+  REQUIRE(t.size() == 7);
+  t.insert(t.end(), 4783);
+  REQUIRE(t.front() == 999);
+  REQUIRE(t.back() == 4783);
+  REQUIRE(t.size() == 8);    
+  List<int> v{999, 33, 2, 86, 46, 2, 567, 4783};
+  REQUIRE(t == v);
+  t.insert(t.begin(), 222);
+  REQUIRE(t.size() == 9);
+  t.insert(t.begin(), 44);
+  REQUIRE(t.size() == 10);
+  REQUIRE(*t.begin() == 44);
+  REQUIRE(*(t.begin().next()) == 222);
+  List<int> x{44, 222, 999, 33, 2, 86, 46, 2, 567, 4783};
+  REQUIRE(t == x);
+
+  List<char> alphabet{'a','b'};
+  ListIterator<char> it = alphabet.begin();
+  ++it;
+  ++it;
+  alphabet.insert(it, 'c');
+  alphabet.insert(it, 'd');
+  alphabet.insert(it, 'e');
+  REQUIRE(alphabet.size() == 5);
+  REQUIRE(*alphabet.begin() == 'a');
+  REQUIRE(*(alphabet.begin().next()) == 'b');
+  REQUIRE(*(alphabet.begin().next().next()) == 'c');
+  REQUIRE(*(alphabet.begin().next().next().next()) == 'd');
+  REQUIRE(alphabet.back() == 'e');
+}

@@ -1,0 +1,22 @@
+TEST_CASE("node at position should be removed", "[erase]") {
+  List<int> numbers{100, 7, 9, 200, 300, 8, 400, 9, 500, 600, 700, 800};
+  ListIterator<int> it = numbers.begin();
+  ++it;
+  numbers.erase(it); // 7
+  ++it;
+  REQUIRE(it.node->value == 9);
+  numbers.erase(it); // 9
+  REQUIRE(numbers.size() == 10);
+  ++it;
+  ++it;
+  ++it;
+  REQUIRE(it.node->value == 8);
+  numbers.erase(it);
+  ++it;
+  ++it;
+  REQUIRE(it.node->value == 9);
+  numbers.erase(it);
+  REQUIRE(numbers.size() == 8);
+  List<int> numbers2{100, 200, 300, 400, 500, 600, 700, 800};
+  REQUIRE(numbers == numbers2);
+} 
