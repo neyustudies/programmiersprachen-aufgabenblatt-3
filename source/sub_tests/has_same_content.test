@@ -11,5 +11,9 @@ TEST_CASE("compare list to vector", "[has_same_content]") {
   std::vector<int> vector{};
   vector.reserve(list.size());
   std::copy(list.begin(), list.end(), std::back_inserter(vector));
-  REQUIRE(has_same_content(list, vector));  
+  REQUIRE(has_same_content(list, vector));
+  REQUIRE(vector[0] == 45);
+  REQUIRE(vector[1] == 32);  
+  REQUIRE(vector[2] == 3);  
+  REQUIRE(vector[3] == 8);    
 }
