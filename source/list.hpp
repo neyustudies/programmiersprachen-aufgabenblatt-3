@@ -172,10 +172,6 @@ class List {
     bool operator==(List const& rhs) const {
       if(size_ != rhs.size_) {
         return false;
-      } else if(first_ == nullptr ^ rhs.first_ == nullptr) {
-        return false;
-      } else if(first_ == nullptr && rhs.first_ == nullptr) {
-        return true;
       } else { 
         auto lhs_elem = first_;
         auto rhs_elem = rhs.first_;
@@ -393,6 +389,7 @@ List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
     r.push_back(c);
   } return r;   
 }
+
 
 /* (free) returns true if list and vector are equal */
 template <typename T>
