@@ -17,7 +17,7 @@ struct ListNode {
   ListNode* next  = nullptr;
 };
 
-
+// not used for better understanding
 template <typename T>
 struct ListIterator {
   using Self              = ListIterator<T>;
@@ -46,7 +46,8 @@ struct ListIterator {
   }
 
 
-  /* PREINCREMENT, call: ++it, advances one element forward */
+  /* PREINCREMENT, call: ++it, 
+  advances one element forward */
   ListIterator<T>& operator++() {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -55,24 +56,27 @@ struct ListIterator {
   }
 
 
-  /* POSTINCREMENT (signature distinguishes the iterators), 
-                    call: it++, advances one element forward*/
+  /* POSTINCREMENT, call: it++, 
+  signature distinguishes the iterators,
+  advances one element forward */
   ListIterator<T> operator++(int) {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
-    } ListIterator<T> tmp = *this;
+    } auto tmp = *this;
       ++(*this);
       return tmp;   
   }
 
 
-  /* Equality-Operation for Iterator */
+  /* Equality-Operation for Iterator,
+  returns true if lists are equal */
   bool operator==(ListIterator<T> const& x) const {
     return x.node == node;
   }
 
 
-  /* Inequality-Operation for Iterator */
+  /* Inequality-Operation for Iterator,
+  returns true if lists are inequal */
   bool operator!=(ListIterator<T> const& x) const {
     return !(x == *this);
   }
@@ -87,7 +91,7 @@ struct ListIterator {
     }
   }
 
-
+  /* node pointer */
   ListNode <T>* node = nullptr;
 };
 
@@ -106,7 +110,7 @@ class List {
     template <typename TEST_TYPE>
     friend ListNode<TEST_TYPE>* get_last_pointer(List<TEST_TYPE> const& list_to_test);
     
-    
+    // not used for better understanding
     using value_type      = T;
     using pointer         = T*;
     using const_pointer   = T const*;
@@ -134,7 +138,8 @@ class List {
     
 
     /* move constructor moves all 
-    elements from rhs to a new list */
+    elements from rhs to a new list,
+    rhs container will be empty */
     List(List<T>&& rhs) :
       size_   {rhs.size_},
       first_  {rhs.first_}, 
@@ -145,7 +150,8 @@ class List {
       }
 
 
-    /* calls initializer_list constructor */
+    /* calls initializer_list constructor,
+    implicit constructor for brace initialization */
     List(std::initializer_list<T> const& ini_list) : List() {
         for(auto const& elem : ini_list) {
           push_back(elem);
@@ -197,14 +203,16 @@ class List {
     }
 
 
-    /* returns iterator to the first element */
+    /* returns iterator pointing to
+    the first element in the container */
     ListIterator<T> begin() const {
       return ListIterator<T>{first_};
     }
 
 
-    /* returns iterator to the 
-    element after the last element */
+    /* returns iterator pointing to 
+    the element after the last element 
+    in the container */
     ListIterator<T> end() const {
       return ListIterator<T>{nullptr};
     }
@@ -227,8 +235,8 @@ class List {
         } else if(pos.node == nullptr) {
           push_back(x);
           return ListIterator<T>{last_};
-          } else {              // ListNode<T>{T value, prev, next}
-            ListNode<T>* tmp = new ListNode<T>{x, pos.node->prev, pos.node};
+          } else {      // ListNode<T>{T value, prev, next}
+            auto tmp = new ListNode<T>{x, pos.node->prev, pos.node};
             tmp->prev->next = tmp;
             tmp->next->prev = tmp;
             ++size_;
@@ -239,17 +247,19 @@ class List {
 
     /* deletes a node at position pos, iterator pointing to next node */
     ListIterator<T> erase(ListIterator<T> const& pos) {
-      ListNode<T>* tmp = pos.node;
+      auto tmp = pos.node;
       tmp->next->prev = tmp->prev;
       tmp->prev->next = tmp->next;
       auto it = ListIterator<T>{tmp->next};
-      delete tmp;
+      delete(tmp);
       --size_;
       return it;
     }
 
 
-    /* reverses the list */
+    /* reverses the order of 
+    elements in the list container,
+    linear complexity in list size */
     void reverse() {
       if(empty()) {
         throw "List is empty";
@@ -265,75 +275,82 @@ class List {
     }
 
 
-    /* adds element to the beginning of list */
+    /* adds element to the beginning of list,
+    before its current first element,
+    increases container size by one */
     void push_front(T const& element) {
-      ListNode<T>* tmp = new ListNode<T>{element};
+      auto new_first = new ListNode<T>{element};
       ++size_;
       if(empty()) {
-        first_       = tmp;
-        last_        = tmp;
-      } tmp->next    = first_;
-        first_->prev = tmp;
-        first_       = tmp;
-        first_->prev = nullptr;
-        last_->next  = nullptr;
+        first_ = new_first;
+        last_  = new_first;
+      } new_first->next = first_;
+        first_->prev    = new_first;
+        first_          = new_first;
+        first_->prev    = nullptr;
+        last_->next     = nullptr;
     }
 
 
-    /* adds element to the end of the list */
+    /* adds element to the end of the list,
+    after its current last element,
+    increases container size by one */
     void push_back(T const& element) {
-      ListNode<T>* tmp = new ListNode<T>{element};
+      auto new_last = new ListNode<T>{element};
       ++size_;
       if(empty()) {
-        first_       = tmp;
-        last_        = tmp;
-      } tmp->prev    = last_;
-        last_->next  = tmp;
-        last_        = tmp;
-        first_->prev = nullptr;
-        last_->next  = nullptr;
+        first_ = new_last;
+        last_  = new_last;
+      } new_last->prev = last_;
+        last_->next    = new_last;
+        last_          = new_last;
+        first_->prev   = nullptr;
+        last_->next    = nullptr;
     }
 
 
-    /* deletes first element */
+    /* deletes first element,
+    reduces container size by one */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
       } else if(size_ == 1) {
         --size_;
         delete(first_);
-        first_          = nullptr;
-        last_           = nullptr;
+        first_ = nullptr;
+        last_  = nullptr;
       } else {
         --size_;
-        auto tmp        = first_;
-        tmp->next->prev = nullptr;
-        first_          = tmp->next;
-        delete(tmp);
+        auto old_first        = first_;
+        old_first->next->prev = nullptr;
+        first_                = old_first->next;
+        delete(old_first);
       }
     }
 
 
-    /* deletes last element */
+    /* deletes last element,
+    reduces container size by one */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
       } else if(size_ == 1) {
         --size_;
         delete(first_);
-        first_          = nullptr;
-        last_           = nullptr;
+        first_ = nullptr;
+        last_  = nullptr;
       } else {
         --size_;
-        auto tmp        = last_;
-        tmp->prev->next = nullptr;
-        last_           = tmp->prev;
-        delete(tmp);     
+        auto old_last        = last_;
+        old_last->prev->next = nullptr;
+        last_                = old_last->prev;
+        delete(old_last);     
       }
     }
 
 
-    /* returns reference to first element */
+    /* returns direct reference to 
+    first element in the list container */
     T& front() {
       if(empty()) {
         throw "List is empty";
@@ -341,7 +358,8 @@ class List {
     }
 
 
-    /* returns reference to last element */
+    /* returns direct reference to 
+    last element in the list container */
     T& back() {
       if(empty()) {
         throw "List is empty";
@@ -355,7 +373,8 @@ class List {
     };
 
     
-    /* returns the number of elements in the list */
+    /* returns the number 
+    of elements in the list */
     std::size_t size() const {      
       return size_;
   };
@@ -372,19 +391,21 @@ class List {
 /*--------------- free functions --------------------------------------------------------------*/
 
 
-/* (free) reverse the list */
+/* (free) reverse the list,
+calls member function reverse */
 template <typename T>
 List<T> reverse(List<T> const& lhs) {
-  List<T> r{lhs};
+  auto r{lhs};
   r.reverse();
   return r;
 }
 
 
-/* (free) adds elements of a list to another list */
+/* (free) adds elements of rhs to another list (lhs),
+elements are added to the end by push_back method */
 template <typename T>
 List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
-  List<T> r{lhs};
+  auto r{lhs};
   for(auto const& c : rhs) {
     r.push_back(c);
   } return r;   
