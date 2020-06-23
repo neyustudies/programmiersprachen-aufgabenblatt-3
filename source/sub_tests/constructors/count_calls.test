@@ -1,10 +1,27 @@
 // l is move-constructed from temporary list objects
-TEST_CASE("count calls of move-constructor", "[count-operator+]") {
-  auto l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};
-  List<int> m{1, 2, 3, 4, 5, 6, 7, 8, 9};
-  std::cout << "[task 3.15]  ";
-  std::copy( l.begin(), l.end(), m.begin()); // (first, last, result)
-  for(auto const& i : l) {
-    std::cout << i << ", ";
-  } std::cout << "\n";
+// https://en.cppreference.com/w/cpp/language/copy_elision
+
+TEST_CASE("count calls of move-constructor", "[count]") {
+
+  SECTION("not using std::move") {
+    List<int> l = List<int>{1, 2, 3, 4, 5} + List<int>{6, 7, 8, 9};  // not called
+    List<int> m{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    REQUIRE(l == m);
+  }
+
+  /*SECTION("using std::move") {
+    List<int> l {};
+    List<int> k {1, 2, 3, 4, 5};
+    List<int> j {6, 7, 8, 9};
+    List<int> m {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    l = std::move(k + j);   // 1 move constructor called
+    REQUIRE(l == m);
+    l.clear();
+    l = std::move(k);       // 2 move constructor called
+    l = std::move(j);       // 3 move constructor called
+    l.clear();
+    auto v = k + j;
+    l = std::move(v);       // 4 move constructor called
+  }*/
 }

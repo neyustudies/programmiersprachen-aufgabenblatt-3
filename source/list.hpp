@@ -17,7 +17,7 @@ struct ListNode {
   ListNode* next  = nullptr;
 };
 
-// not used for better understanding
+
 template <typename T>
 struct ListIterator {
   using Self              = ListIterator<T>;
@@ -147,6 +147,11 @@ class List {
         rhs.size_  = 0;
         rhs.first_ = nullptr;
         rhs.last_  = nullptr;
+
+        /* for count_calls.test
+        static int count_calls = 0;
+        ++count_calls;
+        std::cout << count_calls << " move constructor called" << std::endl; */      
       }
 
 
