@@ -168,9 +168,15 @@ class List {
 
     /* swap function for assignment operator */
     void swap(List<T>& list) {
-      std::swap(first_,list.first_);
-      std::swap(last_, list.last_);
-      std::swap(size_, list.size_);
+      auto tmp_first = first_;
+      auto tmp_last  = last_;
+      auto tmp_size  = size_;
+              first_ = list.first_;
+              last_  = list.last_;
+              size_  = list.size_;
+         list.first_ = tmp_first;
+          list.last_ = tmp_last;
+          list.size_ = tmp_size;
     }
 
 
