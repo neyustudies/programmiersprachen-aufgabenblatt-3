@@ -17,4 +17,21 @@ TEST_CASE("check unifying copy-and-swap assignment operator", "[operator=]") {
   list.push_back(9);
   list2 = list;
   REQUIRE(list == list2);
+
+  List<char> c1{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+  List<char> c2{};
+  c2 = c1;
+  REQUIRE_FALSE(c2.empty());
+  REQUIRE(c2.front() == 'a');
+  REQUIRE(c2.back() == 'h');
+  REQUIRE(c2 == c1);
+
+  List<float> f1{1.5f, 3.1f, 4.f, 35.f, 4265.f};
+  List<float> f2{};
+  f2 = f1;
+  REQUIRE_FALSE(f2.empty());
+  REQUIRE(f2.front() == 1.5f);
+  REQUIRE(f2.back() == 4265.f);
+  REQUIRE(f2 == f1);
+
 }
